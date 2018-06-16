@@ -14,11 +14,11 @@ to be 204x72 pixels and may only contain black and white pixels.
 
 ## Usage ##
 
-# Arduino #
+### Arduino ###
 
 Compile and download the Arduino sketch. You can close the Arduino IDE afterwards.
 
-# Connecting #
+### Connecting ###
 
 The communication is done via I²C which is accessible on the VGA and HDMI ports
 of RTD266x. Connect SCL, SDA and GND with the corresponding Arduino pins.
@@ -34,7 +34,7 @@ For an Arduino Uno and an HDMI connector type A, this would be:
 There are no additional pull-ups required, they are already on the RTD266x
 PCB.
 
-# GUI tool #
+### GUI tool ###
 
 Select the COM port your Arduino is connected to and click **Connect**. You can
 click **Read status** to check the connection. It should return values different
