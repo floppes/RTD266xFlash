@@ -1,7 +1,5 @@
 # RTD266xFlash #
 
-## About ##
-
 This is a combination of an Arduino project and a C# application to read and
 write the firmware of the Realtek RTD266x flat panel display controller.
 
@@ -11,11 +9,6 @@ https://github.com/adafruit/Adafruit_RTD266X_I2CFlasher
 There is a special feature for a 3.5" HDMI display manufactured by
 KeDei: you can replace the boot logo with a custom logo. The custom logo needs
 to be 204x72 pixels and may only contain black and white pixels.
-
-## Attention! ##
-
-Before connecting the display to the Arduino, disconnect the panel from the
-display PCB. Otherwise it may be damaged!
 
 ## Usage ##
 
