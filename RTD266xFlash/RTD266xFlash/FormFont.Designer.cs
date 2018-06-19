@@ -32,6 +32,7 @@
             this.btnDecode = new System.Windows.Forms.Button();
             this.lblNotice = new System.Windows.Forms.Label();
             this.comboFonts = new System.Windows.Forms.ComboBox();
+            this.btnEncode = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
             this.SuspendLayout();
             // 
@@ -42,14 +43,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pic.Location = new System.Drawing.Point(12, 25);
             this.pic.Name = "pic";
-            this.pic.Size = new System.Drawing.Size(350, 179);
+            this.pic.Size = new System.Drawing.Size(407, 221);
             this.pic.TabIndex = 0;
             this.pic.TabStop = false;
             // 
             // btnDecode
             // 
             this.btnDecode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDecode.Location = new System.Drawing.Point(287, 212);
+            this.btnDecode.Location = new System.Drawing.Point(263, 252);
             this.btnDecode.Name = "btnDecode";
             this.btnDecode.Size = new System.Drawing.Size(75, 23);
             this.btnDecode.TabIndex = 1;
@@ -73,16 +74,28 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboFonts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboFonts.FormattingEnabled = true;
-            this.comboFonts.Location = new System.Drawing.Point(12, 212);
+            this.comboFonts.Location = new System.Drawing.Point(12, 252);
             this.comboFonts.Name = "comboFonts";
-            this.comboFonts.Size = new System.Drawing.Size(269, 21);
+            this.comboFonts.Size = new System.Drawing.Size(245, 21);
             this.comboFonts.TabIndex = 3;
+            // 
+            // btnEncode
+            // 
+            this.btnEncode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEncode.Location = new System.Drawing.Point(344, 252);
+            this.btnEncode.Name = "btnEncode";
+            this.btnEncode.Size = new System.Drawing.Size(75, 23);
+            this.btnEncode.TabIndex = 4;
+            this.btnEncode.Text = "Encode...";
+            this.btnEncode.UseVisualStyleBackColor = true;
+            this.btnEncode.Click += new System.EventHandler(this.btnEncode_Click);
             // 
             // FormFont
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(374, 245);
+            this.ClientSize = new System.Drawing.Size(431, 287);
+            this.Controls.Add(this.btnEncode);
             this.Controls.Add(this.comboFonts);
             this.Controls.Add(this.lblNotice);
             this.Controls.Add(this.btnDecode);
@@ -106,5 +119,6 @@
         private System.Windows.Forms.Button btnDecode;
         private System.Windows.Forms.Label lblNotice;
         private System.Windows.Forms.ComboBox comboFonts;
+        private System.Windows.Forms.Button btnEncode;
     }
 }

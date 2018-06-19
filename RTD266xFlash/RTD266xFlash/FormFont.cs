@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace RTD266xFlash
@@ -1008,6 +1009,58 @@ namespace RTD266xFlash
             {
                 MessageBox.Show("No image decoded!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
+        }
+
+        private void btnEncode_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Images (*.png, *.bmp, *.tif, *.tiff)|*.png;*.bmp;*.tif;*.tiff";
+
+            if (openFileDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            string error;
+            string inputFileName = openFileDialog.FileName;
+
+            if (!FontCoder.CheckFile(inputFileName, FontCoder.FontWidthKedei, FontCoder.FontHeightKedei, out error))
+            {
+                MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            FontCoder logo = new FontCoder(FontCoder.FontWidthKedei, FontCoder.FontHeightKedei);
+
+            if (!logo.LoadImage(inputFileName))
+            {
+                MessageBox.Show($"Error! Cannot load logo from \"{inputFileName}\"!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            byte[] logoBytes = logo.Encode();
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Bin files (*.bin)|*.bin";
+
+            if (saveFileDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            string outputFileName = saveFileDialog.FileName;
+
+            try
+            {
+                File.WriteAllBytes(outputFileName, logoBytes);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show($"Cannot save file\"{outputFileName}\"!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            MessageBox.Show($"Encoded image saved successfully to \"{outputFileName}\".", "Encode image", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
