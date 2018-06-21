@@ -46,16 +46,16 @@ Here are some examples for the KeDei 3.5" display. There are different firmware 
 
 ### Change background color to black ###
 
-The background color is set by calling function `CAdjustBackgroundColor`. For firmware #2 this function is located at 0xD432 - 0xD475 and at 0xD2A5 - 0xD2E8 for firmware #3. At function offsets 0x2C (#2: 0xD45E, #3: 0xD2D1) and 0x3C (#2: 0xD46E, #3: 0xD2E1) the instruction is 0xE0 (`MOVX A,@DPTR`). By changing this to 0xE4 (`CLR A`) the background color is always set to 0x000000, which corresponds to black.
+The background color is set by calling function `CAdjustBackgroundColor`. For firmware #1 this function is located at 0xD237 - 0xD27A, for firmware #2 at 0xD432 - 0xD475 and at 0xD2A5 - 0xD2E8 for firmware #3. At function offsets 0x2C (#1: 0xD263, #2: 0xD45E, #3: 0xD2D1) and 0x3C (#1: 0xD273, #2: 0xD46E, #3: 0xD2E1) the instruction is 0xE0 (`MOVX A,@DPTR`). By changing this to 0xE4 (`CLR A`) the background color is always set to 0x000000, which corresponds to black.
 
 ### Change logo colors ###
 
-The boot logo uses two colors, which are picked from a color palette consisting of 16 3-byte (red, green, blue) entries. The palette is located at 0x13A31 (firmware #2 and #3). The foreground color is 0xFFFFFF (white) at 0x13A3A. The background color is 0x0000FF (blue) at 0x13A5B. By changing 0x13A5D to 0x00 we can change the background to black.
+The boot logo uses two colors, which are picked from a color palette consisting of 16 3-byte (red, green, blue) entries. The palette is located at 0x13A31 (firmware #1, #2 and #3). The foreground color is 0xFFFFFF (white) at 0x13A3A. The background color is 0x0000FF (blue) at 0x13A5B. By changing 0x13A5D to 0x00 we can change the background to black.
 
 ### Change "HDMI" pop-up text ###
 
-After the display is powered on and has shown it's logo, a small pop-up shows the input source. The text "HDMI" can be changed easily. You won't find the ASCII characters in the firmware, but you can refer to `tGlobalCharWidth` in [OSD/OSD003/OsdRes003.c](https://github.com/avtehnik/RTD2662/blob/master/OSD/OSD003/OsdRes003.c) to decode and encode a string. Some wide characters like A, G, M, W etc. are composed of two font entries. You can find the "HDMI" string by searching for `19 14 1E 1F 1A 00`. It can be replaced by a custom string but shouldn't be much longer.
+After the display is powered on and has shown it's logo, a small pop-up shows the input source. The text "HDMI" can be changed easily. You won't find the ASCII characters in the firmware, but you can refer to `tGlobalCharWidth` in [OSD/OSD003/OsdRes003.c](https://github.com/avtehnik/RTD2662/blob/master/OSD/OSD003/OsdRes003.c) to decode and encode a string. Some wide characters like A, G, M, W etc. are composed of two font entries. You can find the "HDMI" string by searching for `19 14 1E 1F 1A 00` (offset 0x12346 for firmware #1, #2 and #3). It can be replaced by a custom string but shouldn't be much longer.
 
 ### Disable "HDMI" pop-up ###
 
-The "HDMI" pop-up is shown by the function `CShowNote`. It is located at 0x14733 (firmware #2 and #3). By changing it's first instruction at 0x14733 to 0x22 (`RET`), we force an immediate return from this function and no pop-up is shown.
+The "HDMI" pop-up is shown by the function `CShowNote`. It is located at 0x14733 (firmware #1, #2 and #3). By changing it's first instruction at 0x14733 to 0x22 (`RET`), we force an immediate return from this function and no pop-up is shown.
