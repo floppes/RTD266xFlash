@@ -68,6 +68,7 @@
     </Compile>
     <Compile Include="HashInfo.cs" />
     <Compile Include="FontCoder.cs" />
+    <Compile Include="HashSkip.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RTD266x.cs" />

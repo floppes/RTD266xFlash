@@ -15,15 +15,41 @@ namespace RTD266xFlash.BackgroundWorkers
 
         private readonly Firmware[] _firmwares =
         {
-            new Firmware("KeDei v1.0", 0x260D8, 0x12346, 1507, new HashInfo[]
+            new Firmware("KeDei v1.0", 0x260D8, 0x12346, 1507, new[]
             {
-                new HashInfo(0, 0x12346, "9F8FE8DEC3783B239172F442D6F26B856AE49112E196B98571ED539189C83F1C"),
-                new HashInfo(0x1234C, 0x13D8C, "6E27CC989A3DEE14D0DE54952F62ADF8AF31467DA9ED9D857C88A2CB7635ECA8")
+                new HashInfo(0, 0x80000, "2319EE74B6A09F62484C62B9500FFD356C2A7142BB6D00A5DDFD9E562562F8F4", new []
+                {
+                    new HashSkip(0xD263, 1),   // CAdjustBackgroundColor 1
+                    new HashSkip(0xD273, 1),   // CAdjustBackgroundColor 2
+                    new HashSkip(0x12346, 16), // "HDMI"
+                    new HashSkip(0x13A31, 48), // palette
+                    new HashSkip(0x14733, 1),  // CShowNote
+                    new HashSkip(0x260D8, 903) // logo
+                })
             }),
-            new Firmware("KeDei v1.1", 0x260D8, 0x12346, 1507, new HashInfo[]
+            new Firmware("KeDei v1.1, panel type 1 (SKY035S13B00-14439)", 0x260D8, 0x12346, 1507, new[]
             {
-                new HashInfo(0, 0x12346, "F3931E17F6E033A9FA5BAA7785153B40D1AA79BD0F96E9252035BC90543ADD57"),
-                new HashInfo(0x1234C, 0x13D8C, "52BB272C51DA5FCC172C73B2DD4E096F2D97E04C6A77E467097463F30DDD8375")
+                new HashInfo(0, 0x80000, "B980A13D3472C422FB8E101F6A2BA95DCA0CC2C3D133B8B8B68DF7D5F8FD4AEA", new []
+                {
+                    new HashSkip(0xD45E, 1),
+                    new HashSkip(0xD46E, 1),
+                    new HashSkip(0x12346, 16),
+                    new HashSkip(0x13A31, 48),
+                    new HashSkip(0x14733, 1),
+                    new HashSkip(0x260D8, 903)
+                })
+            }),
+            new Firmware("KeDei v1.1, panel type 2 (SKY035S13D-199)", 0x260D8, 0x12346, 1507, new[]
+            {
+                new HashInfo(0, 0x80000, "F206FB3C359FE9BB57BEADA1D79E054DCD7727A898E800C0EDED27F3183BF79B", new []
+                {
+                    new HashSkip(0xD2D1, 1),
+                    new HashSkip(0xD2E1, 1),
+                    new HashSkip(0x12346, 16),
+                    new HashSkip(0x13A31, 48),
+                    new HashSkip(0x14733, 1),
+                    new HashSkip(0x260D8, 903)
+                })
             })
         };
 
@@ -103,17 +129,7 @@ namespace RTD266xFlash.BackgroundWorkers
 
             foreach (Firmware fw in _firmwares)
             {
-                bool hashesMatch = true;
-
-                foreach (HashInfo hash in fw.Hashes)
-                {
-                    if (Sha256Hash(firmware, hash.Start, hash.Length) != hash.Hash)
-                    {
-                        hashesMatch = false;
-                    }
-                }
-
-                if (hashesMatch)
+                if (fw.CheckHash(firmware))
                 {
                     detectedFirmware = fw;
                     break;
@@ -176,22 +192,6 @@ namespace RTD266xFlash.BackgroundWorkers
         protected override void _backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             ChangeLogoWorkerFinished?.Invoke((RTD266x.Result)e.Result);
-        }
-
-        private string Sha256Hash(byte[] data, int offset, int length)
-        {
-            SHA256Managed sha256 = new SHA256Managed();
-
-            byte[] hash = sha256.ComputeHash(data, offset, length);
-
-            StringBuilder hashString = new StringBuilder();
-
-            foreach (byte hashByte in hash)
-            {
-                hashString.Append($"{hashByte:X2}");
-            }
-
-            return hashString.ToString();
         }
     }
 }
