@@ -1,5 +1,6 @@
 ﻿using RTD266xFlash.BackgroundWorkers;
 using System;
+using System.Drawing;
 using System.IO;
 using System.IO.Ports;
 using System.Text;
@@ -43,7 +44,54 @@ namespace RTD266xFlash
             btnReadStatus.Enabled = connected;
             btnEraseChip.Enabled = connected;
             btnClearLock.Enabled = connected;
-            btnChangeLogo.Enabled = connected;
+            btnModify.Enabled = connected;
+        }
+
+        private void UpdateModifyFirmware()
+        {
+            _guiUpdate = true;
+
+            txtLogoFileName.Enabled = chkChangeLogo.Checked;
+            btnLogoFileNameBrowse.Enabled = chkChangeLogo.Checked;
+
+            numericLogoBackgroundRed.Enabled = chkChangeLogoBackgroundColor.Checked;
+            numericLogoBackgroundGreen.Enabled = chkChangeLogoBackgroundColor.Checked;
+            numericLogoBackgroundBlue.Enabled = chkChangeLogoBackgroundColor.Checked;
+            picLogoBackgroundColor.Enabled = chkChangeLogoBackgroundColor.Checked;
+
+            numericLogoForegroundRed.Enabled = chkChangeLogoForegroundColor.Checked;
+            numericLogoForegroundGreen.Enabled = chkChangeLogoForegroundColor.Checked;
+            numericLogoForegroundBlue.Enabled = chkChangeLogoForegroundColor.Checked;
+            picLogoForegroundColor.Enabled = chkChangeLogoForegroundColor.Checked;
+
+            numericBackgroundRed.Enabled = chkChangeBackgroundColor.Checked;
+            numericBackgroundGreen.Enabled = chkChangeBackgroundColor.Checked;
+            numericBackgroundBlue.Enabled = chkChangeBackgroundColor.Checked;
+            picBackgroundColor.Enabled = chkChangeBackgroundColor.Checked;
+
+            if (chkRemoveHdmi.Checked)
+            {
+                chkChangeHdmi.Checked = false;
+                chkChangeHdmi.Enabled = false;
+            }
+            else
+            {
+                chkChangeHdmi.Enabled = true;
+            }
+
+            if (chkChangeHdmi.Checked)
+            {
+                chkRemoveHdmi.Checked = false;
+                chkRemoveHdmi.Enabled = false;
+            }
+            else
+            {
+                chkRemoveHdmi.Enabled = true;
+            }
+
+            txtChangeHdmi.Enabled = chkChangeHdmi.Checked;
+
+            _guiUpdate = false;
         }
 
         private void UpdateBackgroundWorkerActive(bool active)
@@ -52,7 +100,7 @@ namespace RTD266xFlash
 
             groupMode.Enabled = !active;
             groupConnection.Enabled = !active;
-            groupLogo.Enabled = !active;
+            groupModify.Enabled = !active;
             groupMisc.Enabled = !active;
             groupRead.Enabled = !active;
             groupWrite.Enabled = !active;
@@ -101,6 +149,25 @@ namespace RTD266xFlash
         private void ShowErrorMessageBox(string errorMessage)
         {
             MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+
+        private void FillColorBox(PictureBox pictureBox, int red, int green, int blue)
+        {
+            pictureBox.BackColor = Color.FromArgb(red, green, blue);
+        }
+
+        private void ShowColorDialog(NumericUpDown numericRed, NumericUpDown numericGreen, NumericUpDown numericBlue)
+        {
+            ColorDialog colorDialog = new ColorDialog();
+
+            colorDialog.Color = Color.FromArgb((int)numericRed.Value, (int)numericGreen.Value, (int)numericBlue.Value);
+
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                numericRed.Value = colorDialog.Color.R;
+                numericGreen.Value = colorDialog.Color.G;
+                numericBlue.Value = colorDialog.Color.B;
+            }
         }
 
         #region Background workers
@@ -157,7 +224,7 @@ namespace RTD266xFlash
             UpdateBackgroundWorkerActive(false);
         }
 
-        private void ChangeLogoWorkerFinished(RTD266x.Result result)
+        private void ModifyFirmwareWorkerFinished(RTD266x.Result result)
         {
             UpdateBackgroundWorkerActive(false);
         }
@@ -186,6 +253,7 @@ namespace RTD266xFlash
 
             UpdateConnected(false);
             UpdateMode();
+            UpdateModifyFirmware();
 
             AppendConsoleText("Configure the connection and click \"Connect\"\r\n");
         }
@@ -319,11 +387,11 @@ namespace RTD266xFlash
 
             AppendConsoleText("done\r\n");
 
-            AppendConsoleText($"Manufacturer ID: 0x{statusInfo.ManufacturerId:X2}\r\n");
-            AppendConsoleText($"Device ID: 0x{statusInfo.DeviceId:X2}\r\n");
-            AppendConsoleText($"JEDEC Manufacturer ID: 0x{statusInfo.JedecManufacturerId:X2}\r\n");
+            AppendConsoleText($"Manufacturer ID: 0x{statusInfo.ManufacturerId:X2} ({statusInfo.Manufacturer})\r\n");
+            AppendConsoleText($"Device ID: 0x{statusInfo.DeviceId:X2} ({statusInfo.Type})\r\n");
+            AppendConsoleText($"JEDEC Manufacturer ID: 0x{statusInfo.JedecManufacturerId:X2} ({statusInfo.Manufacturer})\r\n");
             AppendConsoleText($"JEDEC Memory Type: 0x{statusInfo.JedecMemoryType:X2}\r\n");
-            AppendConsoleText($"JEDEC Capacity: 0x{statusInfo.JedecCapacity:X2}\r\n");
+            AppendConsoleText($"JEDEC Capacity: 0x{statusInfo.JedecCapacity:X2} ({statusInfo.Capacity})\r\n");
             AppendConsoleText($"Status: 0x{statusInfo.Status:X4}\r\n");
         }
 
@@ -483,16 +551,62 @@ namespace RTD266xFlash
             }
         }
 
-        private void btnChangeLogo_Click(object sender, EventArgs e)
+        private void btnModify_Click(object sender, EventArgs e)
         {
-            string logoFileName = txtLogoFileName.Text;
-
             UpdateBackgroundWorkerActive(true);
 
-            ChangeLogoWorker changeLogoWorker = new ChangeLogoWorker(_rtd, logoFileName);
+            ModifyFirmwareWorker changeLogoWorker = new ModifyFirmwareWorker(
+                _rtd,
+                chkChangeLogo.Checked ? txtLogoFileName.Text : null,
+                chkChangeLogoBackgroundColor.Checked ? Color.FromArgb((int)numericLogoBackgroundRed.Value, (int)numericLogoBackgroundGreen.Value, (int)numericLogoBackgroundBlue.Value) : Color.Empty,
+                chkChangeLogoForegroundColor.Checked ? Color.FromArgb((int)numericLogoForegroundRed.Value, (int)numericLogoForegroundGreen.Value, (int)numericLogoForegroundBlue.Value) : Color.Empty,
+                chkChangeBackgroundColor.Checked ? Color.FromArgb((int)numericBackgroundRed.Value, (int)numericBackgroundGreen.Value, (int)numericBackgroundBlue.Value) : Color.Empty,
+                chkRemoveHdmi.Checked,
+                chkChangeHdmi.Checked ? txtChangeHdmi.Text : null);
+
             changeLogoWorker.WorkerReportStatus += AppendConsoleText;
-            changeLogoWorker.ChangeLogoWorkerFinished += ChangeLogoWorkerFinished;
+            changeLogoWorker.ModifyFirmwareWorkerFinished += ModifyFirmwareWorkerFinished;
             changeLogoWorker.Start();
+        }
+
+        private void chkModifyFirmware_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_guiUpdate)
+            {
+                return;
+            }
+
+            UpdateModifyFirmware();
+        }
+
+        private void numericLogoBackground_ValueChanged(object sender, EventArgs e)
+        {
+            FillColorBox(picLogoBackgroundColor, (int)numericLogoBackgroundRed.Value, (int)numericLogoBackgroundGreen.Value, (int)numericLogoBackgroundBlue.Value);
+        }
+
+        private void numericLogoForeground_ValueChanged(object sender, EventArgs e)
+        {
+            FillColorBox(picLogoForegroundColor, (int)numericLogoForegroundRed.Value, (int)numericLogoForegroundGreen.Value, (int)numericLogoForegroundBlue.Value);
+        }
+
+        private void numericBackground_ValueChanged(object sender, EventArgs e)
+        {
+            FillColorBox(picBackgroundColor, (int)numericBackgroundRed.Value, (int)numericBackgroundGreen.Value, (int)numericBackgroundBlue.Value);
+        }
+
+        private void picLogoBackgroundColor_Click(object sender, EventArgs e)
+        {
+            ShowColorDialog(numericLogoBackgroundRed, numericLogoBackgroundGreen, numericLogoBackgroundBlue);
+        }
+
+        private void picLogoForegroundColor_Click(object sender, EventArgs e)
+        {
+            ShowColorDialog(numericLogoForegroundRed, numericLogoForegroundGreen, numericLogoForegroundBlue);
+        }
+
+        private void picBackgroundColor_Click(object sender, EventArgs e)
+        {
+            ShowColorDialog(numericBackgroundRed, numericBackgroundGreen, numericBackgroundBlue);
         }
 
         #endregion

@@ -52,6 +52,9 @@ namespace RTD266xFlash
             public int JedecMemoryType;
             public int JedecCapacity;
             public int Status;
+            public string Manufacturer;
+            public string Capacity;
+            public string Type;
         }
 
         private readonly SerialPort _comPort;
@@ -61,32 +64,32 @@ namespace RTD266xFlash
             _comPort = comPort;
         }
 
-        public static string ResultToString(RTD266x.Result result)
+        public static string ResultToString(Result result)
         {
             switch (result)
             {
-                case RTD266x.Result.Ok:
+                case Result.Ok:
                     return "ok";
 
-                case RTD266x.Result.NotOk:
+                case Result.NotOk:
                     return "not ok";
 
-                case RTD266x.Result.NotConnected:
+                case Result.NotConnected:
                     return "not connected";
 
-                case RTD266x.Result.CrcError:
+                case Result.CrcError:
                     return "CRC error";
 
-                case RTD266x.Result.SerialReadError:
+                case Result.SerialReadError:
                     return "serial read error";
 
-                case RTD266x.Result.Timeout:
+                case Result.Timeout:
                     return "timeout";
 
-                case RTD266x.Result.UnexpectedCommand:
+                case Result.UnexpectedCommand:
                     return "unexpected command";
 
-                case RTD266x.Result.InvalidParameters:
+                case Result.InvalidParameters:
                     return "invalid parameters";
             }
 
@@ -217,6 +220,35 @@ namespace RTD266xFlash
             status.JedecMemoryType = response[5];
             status.JedecCapacity = response[6];
             status.Status = (response[7] << 8) | response[8];
+
+            switch (status.ManufacturerId)
+            {
+                case 0xC8:
+                    status.Manufacturer = "Bright Moon Semiconductor Co., Ltd";
+                    break;
+
+                default:
+                    status.Manufacturer = "Unknown";
+                    break;
+            }
+
+            if ((status.ManufacturerId == 0xC8) && (status.JedecCapacity == 0x13))
+            {
+                status.Capacity = "512 KB";
+            }
+            else
+            {
+                status.Capacity = "Unknown";
+            }
+
+            if ((status.ManufacturerId == 0xC8) && (status.DeviceId == 0x12))
+            {
+                status.Type = "T25S40";
+            }
+            else
+            {
+                status.Type = "Unknown";
+            }
 
             return Result.Ok;
         }

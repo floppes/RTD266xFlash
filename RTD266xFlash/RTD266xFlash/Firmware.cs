@@ -19,6 +19,14 @@
         }
 
         /// <summary>
+        /// Maximum logo length
+        /// </summary>
+        public int MaxLogoLength
+        {
+            get;
+        }
+
+        /// <summary>
         /// "HDMI" string offset
         /// </summary>
         public int HdmiStringOffset
@@ -27,9 +35,25 @@
         }
 
         /// <summary>
-        /// Maximum logo length
+        /// Offset of function AdjustBackgroundColor
         /// </summary>
-        public int MaxLogoLength
+        public int AdjustBackgroundColorOffset
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Offset of function ShowNote
+        /// </summary>
+        public int ShowNoteOffset
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Palette offset
+        /// </summary>
+        public int PaletteOffset
         {
             get;
         }
@@ -42,12 +66,15 @@
             get;
         }
 
-        public Firmware(string name, int logoOffset, int hdmiStringOffset, int maxLogoLength, HashInfo[] hashes)
+        public Firmware(string name, int logoOffset, int maxLogoLength, int hdmiStringOffset, int adjustBackgroundColorOffset, int showNoteOffset, int paletteOffset, HashInfo[] hashes)
         {
             Name = name;
             LogoOffset = logoOffset;
-            HdmiStringOffset = hdmiStringOffset;
             MaxLogoLength = maxLogoLength;
+            HdmiStringOffset = hdmiStringOffset;
+            AdjustBackgroundColorOffset = adjustBackgroundColorOffset;
+            ShowNoteOffset = showNoteOffset;
+            PaletteOffset = paletteOffset;
             Hashes = hashes;
         }
 

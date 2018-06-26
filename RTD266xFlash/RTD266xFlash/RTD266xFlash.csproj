@@ -43,7 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackgroundWorkers\BaseWorker.cs" />
-    <Compile Include="BackgroundWorkers\ChangeLogoWorker.cs" />
+    <Compile Include="BackgroundWorkers\ModifyFirmwareWorker.cs" />
     <Compile Include="BackgroundWorkers\ReadWorker.cs" />
     <Compile Include="BackgroundWorkers\WriteWorker.cs" />
     <Compile Include="Firmware.cs" />
