@@ -4,7 +4,7 @@ This is a combination of an Arduino project and a C# application to read and wri
 
 The Arduino code is based on [ladyada's project](https://github.com/adafruit/Adafruit_RTD266X_I2CFlasher).
 
-There is a special feature for a 3.5" HDMI display manufactured by KeDei: you can replace the boot logo with a custom logo. The custom logo needs to be 204x72 pixels and may only contain black and white pixels.
+There are special features for a 3.5" HDMI display manufactured by KeDei: you can replace the boot logo with a custom logo, change the background and foreground colors and modify the "HDMI" pop-up. The custom logo needs to be 204x72 pixels and may only contain black and white pixels.
 
 ## Usage ##
 
@@ -24,11 +24,13 @@ For an Arduino Uno and an HDMI connector type A, this would be:
 | SDA | A4 | 16 |
 | GND | GND | 17 |
 
-There are no additional pull-ups required, they are already on the RTD266x PCB.
+There are no additional pull-ups required, they are already on the RTD266x PCB. The display must be powered on.
+
+A flashing LED on the Arduino indicates a problem with the connection. Reset the Arduino to try again.
 
 ### GUI tool ###
 
-Select the COM port your Arduino is connected to and click **Connect**. You can click **Read status** to check the connection. It should return values different from 0x00 and 0xFF.
+Select the COM port your Arduino is connected to and click **Connect**. You can click **Read status** to check the connection. It should return values different from 0x00 and 0xFF. If it doesn't, try again or reset the Arduino.
 
 ## Firmware modifications ##
 
