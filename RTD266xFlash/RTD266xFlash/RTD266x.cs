@@ -393,6 +393,5 @@ namespace RTD266xFlash
 
             return Result.Ok;
         }
-
     }
 }
