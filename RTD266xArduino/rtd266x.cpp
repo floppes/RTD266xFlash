@@ -43,6 +43,8 @@ static const flash_desc_t flash_devices[] =
   {"SST25VF032" , 0xBF4A00, 4 * 1024,       256, 32},
   // Bright Moon
   {"T25S40"     , 0xC84013,      512,       256, 32},
+  // Unknown
+  {"T25S40"     , 0x1C3113,      512,       256, 32},
   {NULL , 0, 0, 0, 0}
 };
 
@@ -207,6 +209,7 @@ bool setup_chip_commands(uint32_t jedec_id)
   {
     case 0xEF: // Winbond
     case 0xC8: // Bright Moon
+    case 0x1C: // Unknown
       i2c_write_reg(0x62, 0x06); // flash write enable op code
       i2c_write_reg(0x63, 0x50); // flash write enable for volatile status register op code
       i2c_write_reg(0x6A, 0x03); // flash read op code

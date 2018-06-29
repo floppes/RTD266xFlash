@@ -232,7 +232,7 @@ namespace RTD266xFlash
                     break;
             }
 
-            if ((status.ManufacturerId == 0xC8) && (status.JedecCapacity == 0x13))
+            if (((status.ManufacturerId == 0xC8) || (status.ManufacturerId == 0x1C)) && (status.JedecCapacity == 0x13))
             {
                 status.Capacity = "512 KB";
             }
@@ -241,7 +241,7 @@ namespace RTD266xFlash
                 status.Capacity = "Unknown";
             }
 
-            if ((status.ManufacturerId == 0xC8) && (status.DeviceId == 0x12))
+            if (((status.ManufacturerId == 0xC8) || (status.ManufacturerId == 0x1C)) && (status.DeviceId == 0x12))
             {
                 status.Type = "T25S40";
             }
