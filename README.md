@@ -1,8 +1,6 @@
 # RTD266xFlash #
 
-This is a combination of an Arduino project and a C# application to read and write the firmware of the Realtek RTD266x flat panel display controller.
-
-The Arduino code is based on [ladyada's project](https://github.com/adafruit/Adafruit_RTD266X_I2CFlasher).
+This is a combination of an Arduino project and a C# application to read and write the firmware of the Realtek RTD266x flat panel display controller. The Arduino code is based on [ladyada's project](https://github.com/adafruit/Adafruit_RTD266X_I2CFlasher).
 
 There are special features for a 3.5" HDMI display manufactured by KeDei: you can replace the boot logo with a custom logo, change the background and foreground colors and modify the "HDMI" pop-up. The custom logo needs to be 204x72 pixels and may only contain black and white pixels.
 
@@ -10,7 +8,7 @@ There are special features for a 3.5" HDMI display manufactured by KeDei: you ca
 
 ### Arduino ###
 
-Compile and download the Arduino sketch. You can close the Arduino IDE afterwards.
+Compile the sketch with the Arduino IDE and download onto your Arduino. You can close the Arduino IDE afterwards.
 
 ### Connecting ###
 
@@ -28,9 +26,15 @@ There are no additional pull-ups required, they are already on the RTD266x PCB. 
 
 A flashing LED on the Arduino indicates a problem with the connection. Reset the Arduino to try again.
 
+![Setup example](setup.png)
+
 ### GUI tool ###
 
+If you don't have Microsoft Visual Studio to compile the C# tool, you can download the EXE file from the [releases][releases].
+
 Select the COM port your Arduino is connected to and click **Connect**. You can click **Read status** to check the connection. It should return values different from 0x00 and 0xFF. If it doesn't, try again or reset the Arduino.
+
+![Screenshot of GUI tool](screenshot.png)
 
 ## Firmware modifications ##
 
