@@ -32,7 +32,7 @@ A flashing LED on the Arduino indicates a problem with the connection. Reset the
 
 ### GUI tool ###
 
-If you don't have Microsoft Visual Studio to compile the C# tool, you can download the EXE file from the [releases](releases).
+If you don't have Microsoft Visual Studio to compile the C# tool, you can download the EXE file from the [releases](https://github.com/floppes/RTD266xFlash/releases).
 
 Select the COM port your Arduino is connected to and click **Connect**. If there was an error it will tell you what went wrong. You can click **Read status** to check the connection and read some info about the flash chip. It should return values different from 0x00 and 0xFF. If it doesn't, try again or reset the Arduino.
 
