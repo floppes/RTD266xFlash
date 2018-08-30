@@ -60,6 +60,17 @@ namespace RTD266xFlash.BackgroundWorkers
                     new HashSkip(0x14733, 1),
                     new HashSkip(0x260D8, 903)
                 })
+            }),
+            new Firmware("KeDei v1.1, panel type 3 (SKY035S13E-180)", 0x260D8, 1507, 0x12346, 0xD2C9, 0x14733, 0x13A31, new[]
+            {
+                new HashInfo(0, 0x80000, "BF593462795B3AFD00AAAF7914693B8A8665B078F864AF5B55FC61C24F07F264", new []
+                {
+                    new HashSkip(0xD2E6, 48),
+                    new HashSkip(0x12346, 16),
+                    new HashSkip(0x13A31, 48),
+                    new HashSkip(0x14733, 1),
+                    new HashSkip(0x260D8, 903)
+                })
             })
         };
 
