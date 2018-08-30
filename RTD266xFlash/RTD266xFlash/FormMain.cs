@@ -282,6 +282,28 @@ namespace RTD266xFlash
             UpdateConnected(true);
 
             _rtd = new RTD266x(_comPort);
+
+            RTD266x.ErrorCode errorCode;
+            uint errorInfo;
+            RTD266x.Result result = _rtd.ReadErrorCode(out errorCode, out errorInfo);
+
+            if (result != RTD266x.Result.Ok)
+            {
+                AppendConsoleText("error\r\n");
+                return;
+            }
+
+            if (errorCode == RTD266x.ErrorCode.NoError)
+            {
+                AppendConsoleText("Connection successful!\r\n");
+            }
+            else
+            {
+                AppendConsoleText("Initialization error: ");
+                AppendConsoleText(RTD266x.ErrorCodeToString(errorCode, errorInfo) + "\r\n");
+
+                btnDisconnect_Click(null, null);
+            }
         }
 
         private void btnDisconnect_Click(object sender, EventArgs e)

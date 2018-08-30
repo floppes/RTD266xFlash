@@ -26,7 +26,8 @@ typedef enum
   CMD_ERASE_CHIP = 3,
   CMD_WRITE = 4,
   CMD_WRITE_STATUS_LOW = 5,
-  CMD_WRITE_STATUS = 6
+  CMD_WRITE_STATUS = 6,
+  CMD_GET_ERROR = 7
 } cmd_t;
 
 typedef enum
@@ -35,20 +36,21 @@ typedef enum
   RES_ERR = 1
 } result_t;
 
+typedef enum
+{
+  ERR_NONE = 0,
+  ERR_NO_SLAVE = 1,
+  ERR_ISP = 2,
+  ERR_CHIP_DETECT = 3,
+  ERR_SETUP_CMDS = 4
+} error_t;
+
 static uint8_t req[270];
 static uint16_t req_index;
-
-static void error(void)
-{
-  while (1)
-  {
-    // flash LED endlessly
-    LED_ON;
-    delay(200);
-    LED_OFF;
-    delay(200);
-  }
-}
+static error_t error;
+static uint32_t error_info;
+static uint32_t last_error_flash;
+static bool error_led_on;
 
 void setup(void) 
 {
@@ -60,6 +62,10 @@ void setup(void)
   pinMode(LED_BUILTIN, OUTPUT);
 
   req_index = 0;
+  error = ERR_NONE;
+  error_info = 0;
+  last_error_flash = 0;
+  error_led_on = false;
   
   while (!Serial);
   
@@ -71,7 +77,8 @@ void setup(void)
   if (twi_writeTo(0x4A, &data, 0, 1, 1))
   {
     // I2C slave not detected
-    error();
+    error = ERR_NO_SLAVE;
+    return;
   }
   
   TWBR = ((F_CPU / TWI_FREQ) - 16) / 2;
@@ -83,7 +90,8 @@ void setup(void)
   {
     if (retries == 5)
     {
-      error();    
+      error = ERR_ISP;
+      return;   
     }
 
     retries++;
@@ -104,7 +112,9 @@ void setup(void)
 
     if (chip == NULL)
     {
-      error();
+      error = ERR_CHIP_DETECT;
+      error_info = jedec_id;
+      return;
     }
 
     break;
@@ -112,7 +122,9 @@ void setup(void)
 
   if (!setup_chip_commands(chip->jedec_id))
   {
-    error();
+    error = ERR_SETUP_CMDS;
+    error_info = jedec_id;
+    return;
   }
 }
 
@@ -134,6 +146,42 @@ void loop(void)
   {
     // discard garbage data
     req_index = 0;
+  }
+
+  if ((req_index == 1) && (req[0] == CMD_GET_ERROR))
+  {
+    Serial.write(CMD_GET_ERROR);
+    Serial.write(RES_OK);
+    Serial.write(error);
+    Serial.write((error_info >> 24) & 0xFF);
+    Serial.write((error_info >> 16) & 0xFF);
+    Serial.write((error_info >>  8) & 0xFF);
+    Serial.write((error_info >>  0) & 0xFF);
+
+    req_index = 0;
+  }
+
+  if (error != ERR_NONE)
+  {
+    if (millis() - last_error_flash > 200)
+    {
+      // flash LED every 200 ms
+      last_error_flash = millis();
+
+      if (error_led_on)
+      {
+        LED_ON;
+      }
+      else
+      {
+        LED_OFF;
+      }
+
+      error_led_on = !error_led_on;
+    }
+
+    // ignore other commands because we are in error mode
+    return;
   }
 
   if ((req_index == 1) && (req[0] == CMD_INFO))

@@ -17,7 +17,8 @@ namespace RTD266xFlash
             EraseChip = 3,
             Write = 4,
             WriteStatusLow = 5,
-            WriteStatus = 6
+            WriteStatus = 6,
+            GetError = 7
         }
 
         /// <summary>
@@ -42,6 +43,18 @@ namespace RTD266xFlash
             UnexpectedCommand,
             SerialReadError,
             InvalidParameters
+        }
+
+        /// <summary>
+        /// Initialization error codes
+        /// </summary>
+        public enum ErrorCode
+        {
+            NoError,
+            NoSlave,
+            Isp,
+            ChipDetect,
+            SetupCommands
         }
 
         public class StatusInfo
@@ -94,6 +107,29 @@ namespace RTD266xFlash
             }
 
             return "unknown result";
+        }
+
+        public static string ErrorCodeToString(ErrorCode errorCode, uint errorInfo)
+        {
+            switch (errorCode)
+            {
+                case ErrorCode.NoError:
+                    return "no error";
+
+                case ErrorCode.NoSlave:
+                    return "I2C slave not detected";
+
+                case ErrorCode.Isp:
+                    return "could not enter ISP mode";
+
+                case ErrorCode.ChipDetect:
+                    return $"could not detect chip type, unknown JEDEC id 0x{errorInfo:X}";
+
+                case ErrorCode.SetupCommands:
+                    return $"could not setup commands for chip, unknown JEDEC id 0x{errorInfo:X}";
+            }
+
+            return "unknown error code";
         }
 
         private Result ReadComPort(int length, out byte[] data, int timeout = 1000)
@@ -390,6 +426,41 @@ namespace RTD266xFlash
             {
                 return Result.CrcError;
             }
+
+            return Result.Ok;
+        }
+
+        /// <summary>
+        /// Read initialization error code
+        /// </summary>
+        /// <param name="errorCode">Error code</param>
+        /// <returns>Result</returns>
+        public Result ReadErrorCode(out ErrorCode errorCode, out uint errorInfo)
+        {
+            errorCode = ErrorCode.NoError;
+            errorInfo = 0;
+            byte[] response;
+
+            WriteComPort(new[] { (byte)RtdCommand.GetError });
+            Result result = ReadComPort(7, out response);
+
+            if (result != Result.Ok)
+            {
+                return result;
+            }
+
+            if (response[0] != (byte)RtdCommand.GetError)
+            {
+                return Result.UnexpectedCommand;
+            }
+
+            if (response[1] != (byte)RtdResult.Ok)
+            {
+                return Result.NotOk;
+            }
+
+            errorCode = (ErrorCode)response[2];
+            errorInfo = (uint)((response[3] << 24) + (response[4] << 16) + (response[5] << 8) + response[6]);
 
             return Result.Ok;
         }
