@@ -50,11 +50,22 @@ namespace RTD266xFlash.BackgroundWorkers
                     new HashSkip(0x260D8, 903)
                 })
             }),
-            new Firmware("KeDei v1.1, panel type 2 (SKY035S13D-199)", 0x260D8, 1507, 0x12346, 0xD2A5, 0x14733, 0x13A31, new[]
+            new Firmware("KeDei v1.1, panel type 2 (SKY035S13D-199), FW variant 1", 0x260D8, 1507, 0x12346, 0xD2A5, 0x14733, 0x13A31, new[]
             {
                 new HashInfo(0, 0x80000, "FE61C30E7F78D342426BD175312E57309E3993356ED670155D02A5D4DD7405F9", new []
                 {
                     new HashSkip(0xD2C2, 48),
+                    new HashSkip(0x12346, 16),
+                    new HashSkip(0x13A31, 48),
+                    new HashSkip(0x14733, 1),
+                    new HashSkip(0x260D8, 903)
+                })
+            }),
+            new Firmware("KeDei v1.1, panel type 2 (SKY035S13D-199), FW variant 2", 0x260D8, 1507, 0x12346, 0xD341, 0x14733, 0x13A31, new[]
+            {
+                new HashInfo(0, 0x80000, "917E1D70FED56C3A0D2756138EAA31B6F8F3F40E51BF27DCDA1AC70BE7FA8546", new []
+                {
+                    new HashSkip(0xD35E, 48),
                     new HashSkip(0x12346, 16),
                     new HashSkip(0x13A31, 48),
                     new HashSkip(0x14733, 1),
@@ -257,7 +268,7 @@ namespace RTD266xFlash.BackgroundWorkers
 
             if (detectedFirmware == null)
             {
-                ReportStatus("Error! Could not detect firmware.\r\n");
+                ReportStatus("Error! Unknown firmware. You can send your firmware to the author, maybe it can be added to the known firmwares.\r\n");
                 e.Result = result;
                 return;
             }
