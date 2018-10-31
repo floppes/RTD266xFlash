@@ -434,6 +434,7 @@ namespace RTD266xFlash
         /// Read initialization error code
         /// </summary>
         /// <param name="errorCode">Error code</param>
+        /// <param name="errorInfo">Error info</param>
         /// <returns>Result</returns>
         public Result ReadErrorCode(out ErrorCode errorCode, out uint errorInfo)
         {
