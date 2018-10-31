@@ -16,8 +16,6 @@ namespace RTD266xFlash
 
         private bool _guiUpdate;
 
-        private bool _backgroundWorkerActive;
-
         public FormMain()
         {
             InitializeComponent();
@@ -96,8 +94,6 @@ namespace RTD266xFlash
 
         private void UpdateBackgroundWorkerActive(bool active)
         {
-            _backgroundWorkerActive = active;
-
             groupMode.Enabled = !active;
             groupConnection.Enabled = !active;
             groupModify.Enabled = !active;
