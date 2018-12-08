@@ -28,7 +28,7 @@ static const flash_desc_t flash_devices[] =
   {"M25P16"     , 0x202015, 2 * 1024,       256, 64},
   {"M25P32"     , 0x202016, 4 * 1024,       256, 64},
   {"M25P64"     , 0x202017, 8 * 1024,       256, 64},*/
-  // Manufacturer: Windbond 
+  // Manufacturer: Winbond 
   /*{"W25X10"     , 0xEF3011,      128,       256, 64},
   {"W25X20"     , 0xEF3012,      256,       256, 64},
   {"W25X40"     , 0xEF3013,      512,       256, 64},
@@ -222,15 +222,17 @@ bool setup_chip_commands(uint32_t jedec_id)
   return false;
 }
 
-bool read_flash(uint32_t start, uint32_t len)
+bool read_flash(uint32_t start, uint32_t len, uint8_t* buf)
 {
   uint32_t addr;
   uint32_t i;
   uint32_t read_len;
+  uint32_t buf_offset;
   
   crc_init();
 
   addr = start;
+  buf_offset = 0;
 
   do
   {
@@ -245,7 +247,8 @@ bool read_flash(uint32_t start, uint32_t len)
 
     for (i = 0; i < read_len; i++)
     {
-      Serial.write(buffer[i]);
+      buf[buf_offset] = buffer[i];
+      buf_offset++;
     }
 
     crc_process(buffer, read_len);

@@ -26,7 +26,7 @@ flash_desc_t* find_chip(uint32_t jedec_id);
 
 bool setup_chip_commands(uint32_t jedec_id);
 
-bool read_flash(uint32_t start, uint32_t len);
+bool read_flash(uint32_t start, uint32_t len, uint8_t* buf);
 
 bool erase_chip(void);
 
