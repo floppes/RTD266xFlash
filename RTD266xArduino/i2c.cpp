@@ -1,8 +1,6 @@
 #include "Wire.h"
 #include "i2c.h"
 
-#define RTD_I2CADDR 0x4A
-
 uint8_t i2c_read_reg(uint8_t reg)
 {
   Wire.beginTransmission(RTD_I2CADDR);
