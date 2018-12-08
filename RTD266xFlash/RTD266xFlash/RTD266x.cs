@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Ports;
+using System.Threading;
 
 namespace RTD266xFlash
 {
     public class RTD266x
     {
+        #region Enums
+
         /// <summary>
         /// Command codes
         /// </summary>
@@ -27,7 +30,8 @@ namespace RTD266xFlash
         private enum RtdResult : byte
         {
             Ok = 0,
-            Error = 1
+            Error = 1,
+            ChecksumError
         }
 
         /// <summary>
@@ -42,7 +46,8 @@ namespace RTD266xFlash
             CrcError,
             UnexpectedCommand,
             SerialReadError,
-            InvalidParameters
+            InvalidParameters,
+            ChecksumError
         }
 
         /// <summary>
@@ -57,6 +62,8 @@ namespace RTD266xFlash
             SetupCommands
         }
 
+        #endregion
+
         public class StatusInfo
         {
             public int ManufacturerId;
@@ -70,11 +77,29 @@ namespace RTD266xFlash
             public string Type;
         }
 
+        /// <summary>
+        /// Maximum read/write segment size
+        /// </summary>
+        public static readonly int MaxSegmentSize = 256;
+
+        /// <summary>
+        /// Flash sector size
+        /// </summary>
+        public static readonly int SectorSize = 4096;
+
         private readonly SerialPort _comPort;
+
+        private readonly byte[] _blockBuffer;
+
+        private readonly List<byte> _readBuffer;
 
         public RTD266x(SerialPort comPort)
         {
             _comPort = comPort;
+            _blockBuffer = new byte[32];
+            _readBuffer = new List<byte>();
+
+            _comPort.BaseStream.BeginRead(_blockBuffer, 0, _blockBuffer.Length, ReadComPortAsync, null);
         }
 
         public static string ResultToString(Result result)
@@ -104,6 +129,9 @@ namespace RTD266xFlash
 
                 case Result.InvalidParameters:
                     return "invalid parameters";
+
+                case Result.ChecksumError:
+                    return "checksum error";
             }
 
             return "unknown result";
@@ -132,7 +160,62 @@ namespace RTD266xFlash
             return "unknown error code";
         }
 
+        private void ReadComPortAsync(IAsyncResult ar)
+        {
+            int actualLength;
+
+            try
+            {
+                actualLength = _comPort.BaseStream.EndRead(ar);
+                byte[] received = new byte[actualLength];
+
+                Buffer.BlockCopy(_blockBuffer, 0, received, 0, actualLength);
+
+                lock (_readBuffer)
+                {
+                    _readBuffer.AddRange(received);
+                }
+            }
+            catch
+            {
+                // ignored
+            }
+
+            if (_comPort.IsOpen)
+            {
+                _comPort.BaseStream.BeginRead(_blockBuffer, 0, _blockBuffer.Length, ReadComPortAsync, null);
+            }
+        }
+
         private Result ReadComPort(int length, out byte[] data, int timeout = 1000)
+        {
+            data = new byte[length];
+
+            long startTicks = DateTime.Now.Ticks;
+
+            while (true)
+            {
+                lock (_readBuffer)
+                {
+                    if (_readBuffer.Count >= length)
+                    {
+                        _readBuffer.CopyTo(0, data, 0, length);
+                        _readBuffer.RemoveRange(0, length);
+
+                        return Result.Ok;
+                    }
+                }
+
+                if ((DateTime.Now.Ticks - startTicks) / 10000 > timeout)
+                {
+                    return Result.Timeout;
+                }
+
+                Thread.Sleep(50);
+            }
+        }
+
+        private Result ReadComPortOld(int length, out byte[] data, int timeout = 1000)
         {
             data = new byte[length];
 
@@ -171,10 +254,23 @@ namespace RTD266xFlash
 
         private void WriteComPort(byte[] buffer)
         {
+            List<byte> data = new List<byte>(buffer);
+
+            // add checksum
+            byte checksum = 0;
+
+            for (int i = 0; i < buffer.Length; i++)
+            {
+                checksum += buffer[i];
+            }
+
+            data.Add(checksum);
+
             if (_comPort != null && _comPort.IsOpen)
             {
+                _comPort.DiscardOutBuffer();
                 _comPort.DiscardInBuffer();
-                _comPort.Write(buffer, 0, buffer.Length);
+                _comPort.Write(data.ToArray(), 0, data.Count);
             }
         }
 
@@ -183,6 +279,26 @@ namespace RTD266xFlash
             byte[] bytes = new byte[] { (byte)((value >> 16) & 0xFF), (byte)((value >> 8) & 0xFF), (byte)(value & 0xFF) };
 
             return bytes;
+        }
+
+        private bool VerifyChecksum(byte[] data)
+        {
+            byte checksum = 0;
+
+            for (int i = 0; i < data.Length - 1; i++)
+            {
+                checksum += data[i];
+            }
+
+            return checksum == data[data.Length - 1];
+        }
+
+        public void ClearReadBuffer()
+        {
+            lock (_readBuffer)
+            {
+                _readBuffer.Clear();
+            }
         }
 
         /// <summary>
@@ -198,11 +314,16 @@ namespace RTD266xFlash
             byte[] response;
 
             WriteComPort(new [] { (byte)RtdCommand.Read, (byte)((address >> 16) & 0xFF), (byte)((address >> 8) & 0xFF), (byte)(address & 0xFF), (byte)((length >> 16) & 0xFF), (byte)((length >> 8) & 0xFF), (byte)(length & 0xFF) });
-            Result result = ReadComPort(2 + length, out response, 5000);
+            Result result = ReadComPort(3 + length, out response, 5000);
 
             if (result != Result.Ok)
             {
                 return result;
+            }
+
+            if (!VerifyChecksum(response))
+            {
+                return Result.ChecksumError;
             }
 
             if (response[0] != (byte)RtdCommand.Read)
@@ -215,7 +336,7 @@ namespace RTD266xFlash
                 return Result.NotOk;
             }
 
-            data = new byte[response.Length - 2];
+            data = new byte[response.Length - 3];
 
             Array.Copy(response, 2, data, 0, data.Length);
 
@@ -233,11 +354,16 @@ namespace RTD266xFlash
             byte[] response;
 
             WriteComPort(new [] { (byte)RtdCommand.Info });
-            Result result = ReadComPort(9, out response);
+            Result result = ReadComPort(10, out response);
 
             if (result != Result.Ok)
             {
                 return result;
+            }
+
+            if (!VerifyChecksum(response))
+            {
+                return Result.ChecksumError;
             }
 
             if (response[0] != (byte)RtdCommand.Info)
@@ -300,11 +426,16 @@ namespace RTD266xFlash
             byte[] response;
 
             WriteComPort(new [] { (byte)RtdCommand.WriteStatus, statusHigh, statusLow });
-            Result result = ReadComPort(2, out response);
+            Result result = ReadComPort(3, out response);
 
             if (result != Result.Ok)
             {
                 return result;
+            }
+
+            if (!VerifyChecksum(response))
+            {
+                return Result.ChecksumError;
             }
 
             if (response[0] != (byte)RtdCommand.WriteStatus)
@@ -331,11 +462,16 @@ namespace RTD266xFlash
             byte[] response;
 
             WriteComPort(new [] { (byte)RtdCommand.EraseSector, addressBytes[0], addressBytes[1], addressBytes[2] });
-            Result result = ReadComPort(2, out response);
+            Result result = ReadComPort(3, out response);
 
             if (result != Result.Ok)
             {
                 return result;
+            }
+
+            if (!VerifyChecksum(response))
+            {
+                return Result.ChecksumError;
             }
 
             if (response[0] != (byte)RtdCommand.EraseSector)
@@ -360,11 +496,16 @@ namespace RTD266xFlash
             byte[] response;
 
             WriteComPort(new [] { (byte)RtdCommand.EraseChip, (byte)~RtdCommand.EraseChip });
-            Result result = ReadComPort(2, out response, 5000);
+            Result result = ReadComPort(3, out response, 5000);
 
             if (result != Result.Ok)
             {
                 return result;
+            }
+
+            if (!VerifyChecksum(response))
+            {
+                return Result.ChecksumError;
             }
 
             if (response[0] != (byte)RtdCommand.EraseChip)
@@ -410,11 +551,16 @@ namespace RTD266xFlash
             }
 
             WriteComPort(command.ToArray());
-            Result result = ReadComPort(2, out response);
+            Result result = ReadComPort(3, out response);
 
             if (result != Result.Ok)
             {
                 return result;
+            }
+
+            if (!VerifyChecksum(response))
+            {
+                return Result.ChecksumError;
             }
 
             if (response[0] != (byte)RtdCommand.Write)
@@ -443,11 +589,16 @@ namespace RTD266xFlash
             byte[] response;
 
             WriteComPort(new[] { (byte)RtdCommand.GetError });
-            Result result = ReadComPort(7, out response);
+            Result result = ReadComPort(8, out response);
 
             if (result != Result.Ok)
             {
                 return result;
+            }
+
+            if (!VerifyChecksum(response))
+            {
+                return Result.ChecksumError;
             }
 
             if (response[0] != (byte)RtdCommand.GetError)

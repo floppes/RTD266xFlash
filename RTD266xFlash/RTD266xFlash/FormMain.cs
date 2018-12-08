@@ -113,6 +113,16 @@ namespace RTD266xFlash
 
             _guiUpdate = true;
 
+            if (numericUpDown.Maximum != 0 && val > numericUpDown.Maximum)
+            {
+                val = (int)numericUpDown.Maximum;
+            }
+
+            if (numericUpDown.Minimum != 0 && val < numericUpDown.Minimum)
+            {
+                val = (int)numericUpDown.Minimum;
+            }
+
             numericUpDown.Value = val;
 
             _guiUpdate = false;
@@ -164,6 +174,33 @@ namespace RTD266xFlash
                 numericGreen.Value = colorDialog.Color.G;
                 numericBlue.Value = colorDialog.Color.B;
             }
+        }
+
+        /// <summary>
+        /// Helper function to calculate the hash of a new firmware
+        /// </summary>
+        private void CalculateFirmwareHash()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "All files (*.*)|*.*";
+
+            if (openFileDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            byte[] firmwareData = File.ReadAllBytes(openFileDialog.FileName);
+
+            HashInfo hashInfo = new HashInfo(0, 0x80000, string.Empty, new[]
+            {
+                new HashSkip(0xD2E6, 48),
+                new HashSkip(0x12346, 16),
+                new HashSkip(0x13A31, 48),
+                new HashSkip(0x14733, 1),
+                new HashSkip(0x260D8, 903)
+            });
+
+            MessageBox.Show(hashInfo.GetHash(firmwareData), "Firmware hash", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         #region Background workers
@@ -262,8 +299,13 @@ namespace RTD266xFlash
             }
 
             _comPort = new SerialPort(comboBoxPorts.Text, (int)numericBaudRate.Value);
-            _comPort.ReadTimeout = 1000;
-            
+            _comPort.Parity = Parity.None;
+            _comPort.StopBits = StopBits.One;
+            _comPort.DataBits = 8;
+            _comPort.Handshake = Handshake.None;
+
+            AppendConsoleText("Connecting...\r\n");
+
             try
             {
                 _comPort.Open();
@@ -275,17 +317,41 @@ namespace RTD266xFlash
                 return;
             }
 
-            UpdateConnected(true);
-
             _rtd = new RTD266x(_comPort);
 
-            RTD266x.ErrorCode errorCode;
-            uint errorInfo;
-            RTD266x.Result result = _rtd.ReadErrorCode(out errorCode, out errorInfo);
+            UpdateConnected(true);
+
+            RTD266x.ErrorCode errorCode = RTD266x.ErrorCode.NoError;
+            uint errorInfo = 0;
+            RTD266x.Result result = RTD266x.Result.NotOk;
+            int retries = 5;
+
+            // try to connect a few times
+            for (int i = 0; i < retries; i++)
+            {
+                result = _rtd.ReadErrorCode(out errorCode, out errorInfo);
+
+                if (result == RTD266x.Result.Ok)
+                {
+                    break;
+                }
+
+                _rtd.ClearReadBuffer();
+
+                AppendConsoleText($"Connection error: {RTD266x.ResultToString(result)}, retrying... ({i + 1}/{retries})\r\n");
+            }
 
             if (result != RTD266x.Result.Ok)
             {
-                AppendConsoleText("error\r\n");
+                AppendConsoleText($"Connection error: {RTD266x.ResultToString(result)}\r\n");
+                AppendConsoleText("Did you download the sketch RTD266xArduino to your Arduino?\r\n");
+                AppendConsoleText("Is the Arduino connected properly to the display?\r\n");
+                AppendConsoleText("Did you select the correct COM port?\r\n");
+                AppendConsoleText("Is the display powered?\r\n");
+                AppendConsoleText("If the Arduino's user LED is on, the I2C connection to the display does not work.\r\n");
+                AppendConsoleText("Press the Arduino's reset button and try again.\r\n\r\n");
+
+                btnDisconnect_Click(null, null);
                 return;
             }
 
@@ -307,6 +373,8 @@ namespace RTD266xFlash
             if (_comPort != null && _comPort.IsOpen)
             {
                 _comPort.Close();
+
+                AppendConsoleText("Disconnected\r\n");
             }
 
             UpdateConnected(false);
@@ -399,7 +467,7 @@ namespace RTD266xFlash
 
             if (result != RTD266x.Result.Ok)
             {
-                AppendConsoleText("error\r\n");
+                AppendConsoleText(RTD266x.ResultToString(result) + "\r\n");
                 return;
             }
 

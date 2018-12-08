@@ -46,9 +46,9 @@ namespace RTD266xFlash.BackgroundWorkers
 
             while (length - offset > 0)
             {
-                if (length - offset >= 1024)
+                if (length - offset >= RTD266x.MaxSegmentSize)
                 {
-                    segmentLength = 1024;
+                    segmentLength = RTD266x.MaxSegmentSize;
                 }
                 else
                 {
@@ -85,7 +85,7 @@ namespace RTD266xFlash.BackgroundWorkers
 
             while (data.Length - offset > 0)
             {
-                if (address % 4096 == 0)
+                if (address % RTD266x.SectorSize == 0)
                 {
                     if (updateConsole)
                     {
@@ -114,9 +114,9 @@ namespace RTD266xFlash.BackgroundWorkers
 
                 int length;
 
-                if (data.Length - offset >= 256)
+                if (data.Length - offset >= RTD266x.MaxSegmentSize)
                 {
-                    length = 256;
+                    length = RTD266x.MaxSegmentSize;
                 }
                 else
                 {
