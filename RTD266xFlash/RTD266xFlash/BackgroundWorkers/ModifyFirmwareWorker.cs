@@ -24,79 +24,6 @@ namespace RTD266xFlash.BackgroundWorkers
         public event ModifyFirmwareWorkerFinishedEvent ModifyFirmwareWorkerFinished;
 
         /// <summary>
-        /// Known firmwared
-        /// </summary>
-        private readonly Firmware[] _firmwares =
-        {
-            new Firmware("KeDei v1.0", 0x260D8, 1507, 0x12346, 0xD237, 0x14733, 0x13A31, new[]
-            {
-                new HashInfo(0, 0x80000, "B325D2F791EF9122D7E84E2B261CEEA08A2672C94EC851CAC5480D43EA314B25", new []
-                {
-                    new HashSkip(0xD254, 48),  // CAdjustBackgroundColor
-                    new HashSkip(0x12346, 16), // "HDMI"
-                    new HashSkip(0x13A31, 48), // palette
-                    new HashSkip(0x14733, 1),  // CShowNote
-                    new HashSkip(0x260D8, 903) // logo
-                })
-            }),
-            new Firmware("KeDei v1.1, panel type 1 (SKY035S13B00-14439)", 0x260D8, 1507, 0x12346, 0xD432, 0x14733, 0x13A31, new[]
-            {
-                new HashInfo(0, 0x80000, "ADAFD43BE9962E1383CE0223D44E53925C076013C6A88167451DD84F7C47AD42", new []
-                {
-                    new HashSkip(0xD44F, 48),
-                    new HashSkip(0x12346, 16),
-                    new HashSkip(0x13A31, 48),
-                    new HashSkip(0x14733, 1),
-                    new HashSkip(0x260D8, 903)
-                })
-            }),
-            new Firmware("KeDei v1.1, panel type 2 (SKY035S13D-199), FW variant 1", 0x260D8, 1507, 0x12346, 0xD2A5, 0x14733, 0x13A31, new[]
-            {
-                new HashInfo(0, 0x80000, "FE61C30E7F78D342426BD175312E57309E3993356ED670155D02A5D4DD7405F9", new []
-                {
-                    new HashSkip(0xD2C2, 48),
-                    new HashSkip(0x12346, 16),
-                    new HashSkip(0x13A31, 48),
-                    new HashSkip(0x14733, 1),
-                    new HashSkip(0x260D8, 903)
-                })
-            }),
-            new Firmware("KeDei v1.1, panel type 2 (SKY035S13D-199), FW variant 2", 0x260D8, 1507, 0x12346, 0xD341, 0x14733, 0x13A31, new[]
-            {
-                new HashInfo(0, 0x80000, "917E1D70FED56C3A0D2756138EAA31B6F8F3F40E51BF27DCDA1AC70BE7FA8546", new []
-                {
-                    new HashSkip(0xD35E, 48),
-                    new HashSkip(0x12346, 16),
-                    new HashSkip(0x13A31, 48),
-                    new HashSkip(0x14733, 1),
-                    new HashSkip(0x260D8, 903)
-                })
-            }),
-            new Firmware("KeDei v1.1, panel type 3 (SKY035S13E-180), FW variant 1", 0x260D8, 1507, 0x12346, 0xD2C9, 0x14733, 0x13A31, new[]
-            {
-                new HashInfo(0, 0x80000, "BF593462795B3AFD00AAAF7914693B8A8665B078F864AF5B55FC61C24F07F264", new []
-                {
-                    new HashSkip(0xD2E6, 48),
-                    new HashSkip(0x12346, 16),
-                    new HashSkip(0x13A31, 48),
-                    new HashSkip(0x14733, 1),
-                    new HashSkip(0x260D8, 903)
-                })
-            }),
-            new Firmware("KeDei v1.1, panel type 3 (SKY035S13E-180), FW variant 2", 0x260D8, 1507, 0x12346, 0xD2C9, 0x14733, 0x13A31, new[]
-            {
-                new HashInfo(0, 0x80000, "BE27BF78758A7D0D7E59286970B63E4CB4CCECEF22527E9DF434E42A65B36ED3", new []
-                {
-                    new HashSkip(0xD2E6, 48),
-                    new HashSkip(0x12346, 16),
-                    new HashSkip(0x13A31, 48),
-                    new HashSkip(0x14733, 1),
-                    new HashSkip(0x260D8, 903)
-                })
-            })
-        };
-
-        /// <summary>
         /// Character mapping to internal font
         /// </summary>
         private readonly Dictionary<char, byte[]> _osdCharacters = new Dictionary<char, byte[]>
@@ -268,7 +195,7 @@ namespace RTD266xFlash.BackgroundWorkers
 
             Firmware detectedFirmware = null;
 
-            foreach (Firmware fw in _firmwares)
+            foreach (Firmware fw in Firmware.KnownFirmwares)
             {
                 if (fw.CheckHash(firmware))
                 {
