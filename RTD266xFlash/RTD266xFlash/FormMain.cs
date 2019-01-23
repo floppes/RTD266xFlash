@@ -197,10 +197,47 @@ namespace RTD266xFlash
                 new HashSkip(0x12346, 16),
                 new HashSkip(0x13A31, 48),
                 new HashSkip(0x14733, 1),
-                new HashSkip(0x260D8, 903)
+                new HashSkip(0x260D8, 1507)
             });
 
             MessageBox.Show(hashInfo.GetHash(firmwareData), "Firmware hash", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        /// <summary>
+        /// Helper function to identify a firmware
+        /// </summary>
+        private void IdentifyFirmware()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "All files (*.*)|*.*";
+
+            byte[] firmware;
+
+            if (openFileDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            firmware = File.ReadAllBytes(openFileDialog.FileName);
+
+            Firmware detectedFirmware = null;
+
+            foreach (Firmware fw in Firmware.KnownFirmwares)
+            {
+                if (fw.CheckHash(firmware))
+                {
+                    detectedFirmware = fw;
+                    break;
+                }
+            }
+
+            if (detectedFirmware == null)
+            {
+                MessageBox.Show("No matching firmware found!", "Firmware identification", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            MessageBox.Show($"Detected firmware is {detectedFirmware.Name}.", "Firmware identification", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         #region Background workers
