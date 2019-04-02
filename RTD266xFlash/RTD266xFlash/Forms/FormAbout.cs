@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace RTD266xFlash
+namespace RTD266xFlash.Forms
 {
     public partial class FormAbout : Form
     {

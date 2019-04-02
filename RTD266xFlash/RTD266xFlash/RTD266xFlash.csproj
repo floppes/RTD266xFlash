@@ -40,6 +40,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackgroundWorkers\BaseWorker.cs" />
@@ -47,39 +48,76 @@
     <Compile Include="BackgroundWorkers\ReadWorker.cs" />
     <Compile Include="BackgroundWorkers\WriteWorker.cs" />
     <Compile Include="Firmware.cs" />
+    <Compile Include="FirmwareModifier.cs" />
     <Compile Include="Font.cs" />
-    <Compile Include="FormAbout.cs">
+    <Compile Include="Forms\FormAbout.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormAbout.Designer.cs">
+    <Compile Include="Forms\FormAbout.Designer.cs">
       <DependentUpon>FormAbout.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormFont.cs">
+    <Compile Include="Forms\FormExtras.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormFont.Designer.cs">
+    <Compile Include="Forms\FormExtras.Designer.cs">
+      <DependentUpon>FormExtras.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormFileImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormFileImage.Designer.cs">
+      <DependentUpon>FormFileImage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormFont.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormFont.Designer.cs">
       <DependentUpon>FormFont.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormMain.cs">
+    <Compile Include="Forms\FormArduino.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMain.Designer.cs">
-      <DependentUpon>FormMain.cs</DependentUpon>
+    <Compile Include="Forms\FormArduino.Designer.cs">
+      <DependentUpon>FormArduino.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormStart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormStart.Designer.cs">
+      <DependentUpon>FormStart.cs</DependentUpon>
     </Compile>
     <Compile Include="HashInfo.cs" />
     <Compile Include="FontCoder.cs" />
     <Compile Include="HashSkip.cs" />
+    <Compile Include="ModificationSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ModificationSettings.Designer.cs">
+      <DependentUpon>ModificationSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RTD266x.cs" />
-    <EmbeddedResource Include="FormAbout.resx">
+    <EmbeddedResource Include="Forms\FormAbout.resx">
       <DependentUpon>FormAbout.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormFont.resx">
+    <EmbeddedResource Include="Forms\FormExtras.resx">
+      <DependentUpon>FormExtras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFileImage.resx">
+      <DependentUpon>FormFileImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFont.resx">
       <DependentUpon>FormFont.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormMain.resx">
-      <DependentUpon>FormMain.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\FormArduino.resx">
+      <DependentUpon>FormArduino.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormStart.resx">
+      <DependentUpon>FormStart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModificationSettings.resx">
+      <DependentUpon>ModificationSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

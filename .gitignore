@@ -1,3 +1,4 @@
 .vs
 RTD266xFlash/RTD266xFlash/bin/
 RTD266xFlash/RTD266xFlash/obj/
+RTD266xPy/rtd266x/smbus.py

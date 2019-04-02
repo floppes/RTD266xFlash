@@ -1,4 +1,4 @@
-﻿namespace RTD266xFlash
+﻿namespace RTD266xFlash.Forms
 {
     partial class FormAbout
     {
@@ -48,9 +48,9 @@
             this.lblAuthor.AutoSize = true;
             this.lblAuthor.Location = new System.Drawing.Point(12, 31);
             this.lblAuthor.Name = "lblAuthor";
-            this.lblAuthor.Size = new System.Drawing.Size(61, 13);
+            this.lblAuthor.Size = new System.Drawing.Size(157, 13);
             this.lblAuthor.TabIndex = 1;
-            this.lblAuthor.Text = "by floppes";
+            this.lblAuthor.Text = "by floppes (floppes@gmx.de)";
             // 
             // lblLink
             // 

@@ -1,4 +1,4 @@
-﻿namespace RTD266xFlash
+﻿namespace RTD266xFlash.Forms
 {
     partial class FormFont
     {

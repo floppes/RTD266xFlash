@@ -1,6 +1,6 @@
-﻿namespace RTD266xFlash
+﻿namespace RTD266xFlash.Forms
 {
-    partial class FormMain
+    partial class FormArduino
     {
         /// <summary>
         /// Erforderliche Designervariable.
@@ -63,8 +63,6 @@
             this.lblWriteFileName = new System.Windows.Forms.Label();
             this.txtWriteFileName = new System.Windows.Forms.TextBox();
             this.groupMisc = new System.Windows.Forms.GroupBox();
-            this.btnAbout = new System.Windows.Forms.Button();
-            this.btnDecodeFont = new System.Windows.Forms.Button();
             this.btnClearLock = new System.Windows.Forms.Button();
             this.btnEraseChip = new System.Windows.Forms.Button();
             this.btnClearLog = new System.Windows.Forms.Button();
@@ -73,38 +71,7 @@
             this.radioModeExpert = new System.Windows.Forms.RadioButton();
             this.radioModeSimple = new System.Windows.Forms.RadioButton();
             this.groupModify = new System.Windows.Forms.GroupBox();
-            this.picBackgroundColor = new System.Windows.Forms.PictureBox();
-            this.picLogoForegroundColor = new System.Windows.Forms.PictureBox();
-            this.picLogoBackgroundColor = new System.Windows.Forms.PictureBox();
-            this.numericLogoForegroundBlue = new System.Windows.Forms.NumericUpDown();
-            this.lblLogoForegroundBlue = new System.Windows.Forms.Label();
-            this.numericLogoForegroundGreen = new System.Windows.Forms.NumericUpDown();
-            this.lblLogoForegroundGreen = new System.Windows.Forms.Label();
-            this.lblLogoForegroundRed = new System.Windows.Forms.Label();
-            this.numericLogoForegroundRed = new System.Windows.Forms.NumericUpDown();
-            this.chkChangeLogoForegroundColor = new System.Windows.Forms.CheckBox();
-            this.txtChangeHdmi = new System.Windows.Forms.TextBox();
-            this.chkChangeHdmi = new System.Windows.Forms.CheckBox();
-            this.chkRemoveHdmi = new System.Windows.Forms.CheckBox();
-            this.numericBackgroundBlue = new System.Windows.Forms.NumericUpDown();
-            this.lblBackgroundBlue = new System.Windows.Forms.Label();
-            this.numericBackgroundGreen = new System.Windows.Forms.NumericUpDown();
-            this.lblBackgroundGreen = new System.Windows.Forms.Label();
-            this.lblBackgroundRed = new System.Windows.Forms.Label();
-            this.numericBackgroundRed = new System.Windows.Forms.NumericUpDown();
-            this.numericLogoBackgroundBlue = new System.Windows.Forms.NumericUpDown();
-            this.lblLogoBackgroundBlue = new System.Windows.Forms.Label();
-            this.numericLogoBackgroundGreen = new System.Windows.Forms.NumericUpDown();
-            this.lblLogoBackgroundGreen = new System.Windows.Forms.Label();
-            this.lblLogoBackgroundRed = new System.Windows.Forms.Label();
-            this.numericLogoBackgroundRed = new System.Windows.Forms.NumericUpDown();
-            this.chkChangeBackgroundColor = new System.Windows.Forms.CheckBox();
-            this.chkChangeLogoBackgroundColor = new System.Windows.Forms.CheckBox();
-            this.chkChangeLogo = new System.Windows.Forms.CheckBox();
-            this.btnModify = new System.Windows.Forms.Button();
-            this.btnLogoFileNameBrowse = new System.Windows.Forms.Button();
-            this.txtLogoFileName = new System.Windows.Forms.TextBox();
-            this.lblLogoFileName = new System.Windows.Forms.Label();
+            this.modificationSettings = new RTD266xFlash.ModificationSettings();
             this.groupConnection.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericBaudRate)).BeginInit();
             this.groupRead.SuspendLayout();
@@ -115,18 +82,6 @@
             this.groupMisc.SuspendLayout();
             this.groupMode.SuspendLayout();
             this.groupModify.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picLogoForegroundColor)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picLogoBackgroundColor)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericLogoForegroundBlue)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericLogoForegroundGreen)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericLogoForegroundRed)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericBackgroundBlue)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericBackgroundGreen)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericBackgroundRed)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericLogoBackgroundBlue)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericLogoBackgroundGreen)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericLogoBackgroundRed)).BeginInit();
             this.SuspendLayout();
             // 
             // groupConnection
@@ -511,8 +466,6 @@
             // 
             // groupMisc
             // 
-            this.groupMisc.Controls.Add(this.btnAbout);
-            this.groupMisc.Controls.Add(this.btnDecodeFont);
             this.groupMisc.Controls.Add(this.btnClearLock);
             this.groupMisc.Controls.Add(this.btnEraseChip);
             this.groupMisc.Controls.Add(this.btnClearLog);
@@ -523,26 +476,6 @@
             this.groupMisc.TabIndex = 5;
             this.groupMisc.TabStop = false;
             this.groupMisc.Text = "Miscellaneous";
-            // 
-            // btnAbout
-            // 
-            this.btnAbout.Location = new System.Drawing.Point(6, 79);
-            this.btnAbout.Name = "btnAbout";
-            this.btnAbout.Size = new System.Drawing.Size(114, 23);
-            this.btnAbout.TabIndex = 5;
-            this.btnAbout.Text = "About...";
-            this.btnAbout.UseVisualStyleBackColor = true;
-            this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
-            // 
-            // btnDecodeFont
-            // 
-            this.btnDecodeFont.Location = new System.Drawing.Point(126, 79);
-            this.btnDecodeFont.Name = "btnDecodeFont";
-            this.btnDecodeFont.Size = new System.Drawing.Size(114, 23);
-            this.btnDecodeFont.TabIndex = 4;
-            this.btnDecodeFont.Text = "Decode font...";
-            this.btnDecodeFont.UseVisualStyleBackColor = true;
-            this.btnDecodeFont.Click += new System.EventHandler(this.btnDecodeFont_Click);
             // 
             // btnClearLock
             // 
@@ -620,38 +553,7 @@
             // 
             // groupModify
             // 
-            this.groupModify.Controls.Add(this.picBackgroundColor);
-            this.groupModify.Controls.Add(this.picLogoForegroundColor);
-            this.groupModify.Controls.Add(this.picLogoBackgroundColor);
-            this.groupModify.Controls.Add(this.numericLogoForegroundBlue);
-            this.groupModify.Controls.Add(this.lblLogoForegroundBlue);
-            this.groupModify.Controls.Add(this.numericLogoForegroundGreen);
-            this.groupModify.Controls.Add(this.lblLogoForegroundGreen);
-            this.groupModify.Controls.Add(this.lblLogoForegroundRed);
-            this.groupModify.Controls.Add(this.numericLogoForegroundRed);
-            this.groupModify.Controls.Add(this.chkChangeLogoForegroundColor);
-            this.groupModify.Controls.Add(this.txtChangeHdmi);
-            this.groupModify.Controls.Add(this.chkChangeHdmi);
-            this.groupModify.Controls.Add(this.chkRemoveHdmi);
-            this.groupModify.Controls.Add(this.numericBackgroundBlue);
-            this.groupModify.Controls.Add(this.lblBackgroundBlue);
-            this.groupModify.Controls.Add(this.numericBackgroundGreen);
-            this.groupModify.Controls.Add(this.lblBackgroundGreen);
-            this.groupModify.Controls.Add(this.lblBackgroundRed);
-            this.groupModify.Controls.Add(this.numericBackgroundRed);
-            this.groupModify.Controls.Add(this.numericLogoBackgroundBlue);
-            this.groupModify.Controls.Add(this.lblLogoBackgroundBlue);
-            this.groupModify.Controls.Add(this.numericLogoBackgroundGreen);
-            this.groupModify.Controls.Add(this.lblLogoBackgroundGreen);
-            this.groupModify.Controls.Add(this.lblLogoBackgroundRed);
-            this.groupModify.Controls.Add(this.numericLogoBackgroundRed);
-            this.groupModify.Controls.Add(this.chkChangeBackgroundColor);
-            this.groupModify.Controls.Add(this.chkChangeLogoBackgroundColor);
-            this.groupModify.Controls.Add(this.chkChangeLogo);
-            this.groupModify.Controls.Add(this.btnModify);
-            this.groupModify.Controls.Add(this.btnLogoFileNameBrowse);
-            this.groupModify.Controls.Add(this.txtLogoFileName);
-            this.groupModify.Controls.Add(this.lblLogoFileName);
+            this.groupModify.Controls.Add(this.modificationSettings);
             this.groupModify.Location = new System.Drawing.Point(314, 12);
             this.groupModify.Name = "groupModify";
             this.groupModify.Size = new System.Drawing.Size(296, 297);
@@ -659,364 +561,16 @@
             this.groupModify.TabStop = false;
             this.groupModify.Text = "Modify firmware";
             // 
-            // picBackgroundColor
-            // 
-            this.picBackgroundColor.BackColor = System.Drawing.Color.Black;
-            this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.picBackgroundColor.Location = new System.Drawing.Point(247, 189);
-            this.picBackgroundColor.Name = "picBackgroundColor";
-            this.picBackgroundColor.Size = new System.Drawing.Size(22, 22);
-            this.picBackgroundColor.TabIndex = 36;
-            this.picBackgroundColor.TabStop = false;
-            this.picBackgroundColor.Click += new System.EventHandler(this.picBackgroundColor_Click);
-            // 
-            // picLogoForegroundColor
-            // 
-            this.picLogoForegroundColor.BackColor = System.Drawing.Color.White;
-            this.picLogoForegroundColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.picLogoForegroundColor.Location = new System.Drawing.Point(247, 138);
-            this.picLogoForegroundColor.Name = "picLogoForegroundColor";
-            this.picLogoForegroundColor.Size = new System.Drawing.Size(22, 22);
-            this.picLogoForegroundColor.TabIndex = 35;
-            this.picLogoForegroundColor.TabStop = false;
-            this.picLogoForegroundColor.Click += new System.EventHandler(this.picLogoForegroundColor_Click);
-            // 
-            // picLogoBackgroundColor
-            // 
-            this.picLogoBackgroundColor.BackColor = System.Drawing.Color.Black;
-            this.picLogoBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.picLogoBackgroundColor.Location = new System.Drawing.Point(247, 87);
-            this.picLogoBackgroundColor.Name = "picLogoBackgroundColor";
-            this.picLogoBackgroundColor.Size = new System.Drawing.Size(22, 22);
-            this.picLogoBackgroundColor.TabIndex = 34;
-            this.picLogoBackgroundColor.TabStop = false;
-            this.picLogoBackgroundColor.Click += new System.EventHandler(this.picLogoBackgroundColor_Click);
-            // 
-            // numericLogoForegroundBlue
-            // 
-            this.numericLogoForegroundBlue.Location = new System.Drawing.Point(189, 138);
-            this.numericLogoForegroundBlue.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.numericLogoForegroundBlue.Name = "numericLogoForegroundBlue";
-            this.numericLogoForegroundBlue.Size = new System.Drawing.Size(52, 22);
-            this.numericLogoForegroundBlue.TabIndex = 33;
-            this.numericLogoForegroundBlue.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.numericLogoForegroundBlue.ValueChanged += new System.EventHandler(this.numericLogoForeground_ValueChanged);
-            // 
-            // lblLogoForegroundBlue
-            // 
-            this.lblLogoForegroundBlue.AutoSize = true;
-            this.lblLogoForegroundBlue.Location = new System.Drawing.Point(166, 140);
-            this.lblLogoForegroundBlue.Name = "lblLogoForegroundBlue";
-            this.lblLogoForegroundBlue.Size = new System.Drawing.Size(17, 13);
-            this.lblLogoForegroundBlue.TabIndex = 32;
-            this.lblLogoForegroundBlue.Text = "B:";
-            // 
-            // numericLogoForegroundGreen
-            // 
-            this.numericLogoForegroundGreen.Location = new System.Drawing.Point(108, 138);
-            this.numericLogoForegroundGreen.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.numericLogoForegroundGreen.Name = "numericLogoForegroundGreen";
-            this.numericLogoForegroundGreen.Size = new System.Drawing.Size(52, 22);
-            this.numericLogoForegroundGreen.TabIndex = 31;
-            this.numericLogoForegroundGreen.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.numericLogoForegroundGreen.ValueChanged += new System.EventHandler(this.numericLogoForeground_ValueChanged);
-            // 
-            // lblLogoForegroundGreen
-            // 
-            this.lblLogoForegroundGreen.AutoSize = true;
-            this.lblLogoForegroundGreen.Location = new System.Drawing.Point(84, 140);
-            this.lblLogoForegroundGreen.Name = "lblLogoForegroundGreen";
-            this.lblLogoForegroundGreen.Size = new System.Drawing.Size(18, 13);
-            this.lblLogoForegroundGreen.TabIndex = 30;
-            this.lblLogoForegroundGreen.Text = "G:";
-            // 
-            // lblLogoForegroundRed
-            // 
-            this.lblLogoForegroundRed.AutoSize = true;
-            this.lblLogoForegroundRed.Location = new System.Drawing.Point(3, 140);
-            this.lblLogoForegroundRed.Name = "lblLogoForegroundRed";
-            this.lblLogoForegroundRed.Size = new System.Drawing.Size(17, 13);
-            this.lblLogoForegroundRed.TabIndex = 29;
-            this.lblLogoForegroundRed.Text = "R:";
-            // 
-            // numericLogoForegroundRed
-            // 
-            this.numericLogoForegroundRed.Location = new System.Drawing.Point(26, 138);
-            this.numericLogoForegroundRed.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.numericLogoForegroundRed.Name = "numericLogoForegroundRed";
-            this.numericLogoForegroundRed.Size = new System.Drawing.Size(52, 22);
-            this.numericLogoForegroundRed.TabIndex = 28;
-            this.numericLogoForegroundRed.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.numericLogoForegroundRed.ValueChanged += new System.EventHandler(this.numericLogoForeground_ValueChanged);
-            // 
-            // chkChangeLogoForegroundColor
-            // 
-            this.chkChangeLogoForegroundColor.AutoSize = true;
-            this.chkChangeLogoForegroundColor.Location = new System.Drawing.Point(6, 115);
-            this.chkChangeLogoForegroundColor.Name = "chkChangeLogoForegroundColor";
-            this.chkChangeLogoForegroundColor.Size = new System.Drawing.Size(185, 17);
-            this.chkChangeLogoForegroundColor.TabIndex = 27;
-            this.chkChangeLogoForegroundColor.Text = "Change logo foreground color";
-            this.chkChangeLogoForegroundColor.UseVisualStyleBackColor = true;
-            this.chkChangeLogoForegroundColor.CheckedChanged += new System.EventHandler(this.chkModifyFirmware_CheckedChanged);
-            // 
-            // txtChangeHdmi
-            // 
-            this.txtChangeHdmi.Location = new System.Drawing.Point(177, 238);
-            this.txtChangeHdmi.Name = "txtChangeHdmi";
-            this.txtChangeHdmi.Size = new System.Drawing.Size(113, 22);
-            this.txtChangeHdmi.TabIndex = 26;
-            this.txtChangeHdmi.Text = "HDMI";
-            // 
-            // chkChangeHdmi
-            // 
-            this.chkChangeHdmi.AutoSize = true;
-            this.chkChangeHdmi.Location = new System.Drawing.Point(6, 240);
-            this.chkChangeHdmi.Name = "chkChangeHdmi";
-            this.chkChangeHdmi.Size = new System.Drawing.Size(165, 17);
-            this.chkChangeHdmi.TabIndex = 25;
-            this.chkChangeHdmi.Text = "Change \"HDMI\" pop-up to:";
-            this.chkChangeHdmi.UseVisualStyleBackColor = true;
-            this.chkChangeHdmi.CheckedChanged += new System.EventHandler(this.chkModifyFirmware_CheckedChanged);
-            // 
-            // chkRemoveHdmi
-            // 
-            this.chkRemoveHdmi.AutoSize = true;
-            this.chkRemoveHdmi.Location = new System.Drawing.Point(6, 217);
-            this.chkRemoveHdmi.Name = "chkRemoveHdmi";
-            this.chkRemoveHdmi.Size = new System.Drawing.Size(148, 17);
-            this.chkRemoveHdmi.TabIndex = 24;
-            this.chkRemoveHdmi.Text = "Remove \"HDMI\" pop-up";
-            this.chkRemoveHdmi.UseVisualStyleBackColor = true;
-            this.chkRemoveHdmi.CheckedChanged += new System.EventHandler(this.chkModifyFirmware_CheckedChanged);
-            // 
-            // numericBackgroundBlue
-            // 
-            this.numericBackgroundBlue.Location = new System.Drawing.Point(189, 189);
-            this.numericBackgroundBlue.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.numericBackgroundBlue.Name = "numericBackgroundBlue";
-            this.numericBackgroundBlue.Size = new System.Drawing.Size(52, 22);
-            this.numericBackgroundBlue.TabIndex = 23;
-            this.numericBackgroundBlue.ValueChanged += new System.EventHandler(this.numericBackground_ValueChanged);
-            // 
-            // lblBackgroundBlue
-            // 
-            this.lblBackgroundBlue.AutoSize = true;
-            this.lblBackgroundBlue.Location = new System.Drawing.Point(166, 191);
-            this.lblBackgroundBlue.Name = "lblBackgroundBlue";
-            this.lblBackgroundBlue.Size = new System.Drawing.Size(17, 13);
-            this.lblBackgroundBlue.TabIndex = 22;
-            this.lblBackgroundBlue.Text = "B:";
-            // 
-            // numericBackgroundGreen
-            // 
-            this.numericBackgroundGreen.Location = new System.Drawing.Point(108, 189);
-            this.numericBackgroundGreen.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.numericBackgroundGreen.Name = "numericBackgroundGreen";
-            this.numericBackgroundGreen.Size = new System.Drawing.Size(52, 22);
-            this.numericBackgroundGreen.TabIndex = 21;
-            this.numericBackgroundGreen.ValueChanged += new System.EventHandler(this.numericBackground_ValueChanged);
-            // 
-            // lblBackgroundGreen
-            // 
-            this.lblBackgroundGreen.AutoSize = true;
-            this.lblBackgroundGreen.Location = new System.Drawing.Point(84, 191);
-            this.lblBackgroundGreen.Name = "lblBackgroundGreen";
-            this.lblBackgroundGreen.Size = new System.Drawing.Size(18, 13);
-            this.lblBackgroundGreen.TabIndex = 20;
-            this.lblBackgroundGreen.Text = "G:";
-            // 
-            // lblBackgroundRed
-            // 
-            this.lblBackgroundRed.AutoSize = true;
-            this.lblBackgroundRed.Location = new System.Drawing.Point(3, 191);
-            this.lblBackgroundRed.Name = "lblBackgroundRed";
-            this.lblBackgroundRed.Size = new System.Drawing.Size(17, 13);
-            this.lblBackgroundRed.TabIndex = 19;
-            this.lblBackgroundRed.Text = "R:";
-            // 
-            // numericBackgroundRed
-            // 
-            this.numericBackgroundRed.Location = new System.Drawing.Point(26, 189);
-            this.numericBackgroundRed.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.numericBackgroundRed.Name = "numericBackgroundRed";
-            this.numericBackgroundRed.Size = new System.Drawing.Size(52, 22);
-            this.numericBackgroundRed.TabIndex = 18;
-            this.numericBackgroundRed.ValueChanged += new System.EventHandler(this.numericBackground_ValueChanged);
-            // 
-            // numericLogoBackgroundBlue
-            // 
-            this.numericLogoBackgroundBlue.Location = new System.Drawing.Point(189, 87);
-            this.numericLogoBackgroundBlue.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.numericLogoBackgroundBlue.Name = "numericLogoBackgroundBlue";
-            this.numericLogoBackgroundBlue.Size = new System.Drawing.Size(52, 22);
-            this.numericLogoBackgroundBlue.TabIndex = 17;
-            this.numericLogoBackgroundBlue.ValueChanged += new System.EventHandler(this.numericLogoBackground_ValueChanged);
-            // 
-            // lblLogoBackgroundBlue
-            // 
-            this.lblLogoBackgroundBlue.AutoSize = true;
-            this.lblLogoBackgroundBlue.Location = new System.Drawing.Point(166, 89);
-            this.lblLogoBackgroundBlue.Name = "lblLogoBackgroundBlue";
-            this.lblLogoBackgroundBlue.Size = new System.Drawing.Size(17, 13);
-            this.lblLogoBackgroundBlue.TabIndex = 16;
-            this.lblLogoBackgroundBlue.Text = "B:";
-            // 
-            // numericLogoBackgroundGreen
-            // 
-            this.numericLogoBackgroundGreen.Location = new System.Drawing.Point(108, 87);
-            this.numericLogoBackgroundGreen.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.numericLogoBackgroundGreen.Name = "numericLogoBackgroundGreen";
-            this.numericLogoBackgroundGreen.Size = new System.Drawing.Size(52, 22);
-            this.numericLogoBackgroundGreen.TabIndex = 15;
-            this.numericLogoBackgroundGreen.ValueChanged += new System.EventHandler(this.numericLogoBackground_ValueChanged);
-            // 
-            // lblLogoBackgroundGreen
-            // 
-            this.lblLogoBackgroundGreen.AutoSize = true;
-            this.lblLogoBackgroundGreen.Location = new System.Drawing.Point(84, 89);
-            this.lblLogoBackgroundGreen.Name = "lblLogoBackgroundGreen";
-            this.lblLogoBackgroundGreen.Size = new System.Drawing.Size(18, 13);
-            this.lblLogoBackgroundGreen.TabIndex = 14;
-            this.lblLogoBackgroundGreen.Text = "G:";
-            // 
-            // lblLogoBackgroundRed
-            // 
-            this.lblLogoBackgroundRed.AutoSize = true;
-            this.lblLogoBackgroundRed.Location = new System.Drawing.Point(3, 89);
-            this.lblLogoBackgroundRed.Name = "lblLogoBackgroundRed";
-            this.lblLogoBackgroundRed.Size = new System.Drawing.Size(17, 13);
-            this.lblLogoBackgroundRed.TabIndex = 13;
-            this.lblLogoBackgroundRed.Text = "R:";
-            // 
-            // numericLogoBackgroundRed
-            // 
-            this.numericLogoBackgroundRed.Location = new System.Drawing.Point(26, 87);
-            this.numericLogoBackgroundRed.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.numericLogoBackgroundRed.Name = "numericLogoBackgroundRed";
-            this.numericLogoBackgroundRed.Size = new System.Drawing.Size(52, 22);
-            this.numericLogoBackgroundRed.TabIndex = 12;
-            this.numericLogoBackgroundRed.ValueChanged += new System.EventHandler(this.numericLogoBackground_ValueChanged);
-            // 
-            // chkChangeBackgroundColor
-            // 
-            this.chkChangeBackgroundColor.AutoSize = true;
-            this.chkChangeBackgroundColor.Location = new System.Drawing.Point(6, 166);
-            this.chkChangeBackgroundColor.Name = "chkChangeBackgroundColor";
-            this.chkChangeBackgroundColor.Size = new System.Drawing.Size(200, 17);
-            this.chkChangeBackgroundColor.TabIndex = 11;
-            this.chkChangeBackgroundColor.Text = "Change display background color";
-            this.chkChangeBackgroundColor.UseVisualStyleBackColor = true;
-            this.chkChangeBackgroundColor.CheckedChanged += new System.EventHandler(this.chkModifyFirmware_CheckedChanged);
-            // 
-            // chkChangeLogoBackgroundColor
-            // 
-            this.chkChangeLogoBackgroundColor.AutoSize = true;
-            this.chkChangeLogoBackgroundColor.Location = new System.Drawing.Point(6, 64);
-            this.chkChangeLogoBackgroundColor.Name = "chkChangeLogoBackgroundColor";
-            this.chkChangeLogoBackgroundColor.Size = new System.Drawing.Size(188, 17);
-            this.chkChangeLogoBackgroundColor.TabIndex = 10;
-            this.chkChangeLogoBackgroundColor.Text = "Change logo background color";
-            this.chkChangeLogoBackgroundColor.UseVisualStyleBackColor = true;
-            this.chkChangeLogoBackgroundColor.CheckedChanged += new System.EventHandler(this.chkModifyFirmware_CheckedChanged);
-            // 
-            // chkChangeLogo
-            // 
-            this.chkChangeLogo.AutoSize = true;
-            this.chkChangeLogo.Location = new System.Drawing.Point(6, 19);
-            this.chkChangeLogo.Name = "chkChangeLogo";
-            this.chkChangeLogo.Size = new System.Drawing.Size(93, 17);
-            this.chkChangeLogo.TabIndex = 9;
-            this.chkChangeLogo.Text = "Change logo";
-            this.chkChangeLogo.UseVisualStyleBackColor = true;
-            this.chkChangeLogo.CheckedChanged += new System.EventHandler(this.chkModifyFirmware_CheckedChanged);
-            // 
-            // btnModify
-            // 
-            this.btnModify.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnModify.Location = new System.Drawing.Point(6, 268);
-            this.btnModify.Name = "btnModify";
-            this.btnModify.Size = new System.Drawing.Size(114, 23);
-            this.btnModify.TabIndex = 8;
-            this.btnModify.Text = "Modify firmware";
-            this.btnModify.UseVisualStyleBackColor = true;
-            this.btnModify.Click += new System.EventHandler(this.btnModify_Click);
-            // 
-            // btnLogoFileNameBrowse
-            // 
-            this.btnLogoFileNameBrowse.Location = new System.Drawing.Point(259, 36);
-            this.btnLogoFileNameBrowse.Name = "btnLogoFileNameBrowse";
-            this.btnLogoFileNameBrowse.Size = new System.Drawing.Size(31, 22);
-            this.btnLogoFileNameBrowse.TabIndex = 4;
-            this.btnLogoFileNameBrowse.Text = "...";
-            this.btnLogoFileNameBrowse.UseVisualStyleBackColor = true;
-            this.btnLogoFileNameBrowse.Click += new System.EventHandler(this.btnLogoFileNameBrowse_Click);
-            // 
-            // txtLogoFileName
-            // 
-            this.txtLogoFileName.Location = new System.Drawing.Point(95, 36);
-            this.txtLogoFileName.Name = "txtLogoFileName";
-            this.txtLogoFileName.Size = new System.Drawing.Size(158, 22);
-            this.txtLogoFileName.TabIndex = 3;
-            // 
-            // lblLogoFileName
-            // 
-            this.lblLogoFileName.AutoSize = true;
-            this.lblLogoFileName.Location = new System.Drawing.Point(3, 39);
-            this.lblLogoFileName.Name = "lblLogoFileName";
-            this.lblLogoFileName.Size = new System.Drawing.Size(86, 13);
-            this.lblLogoFileName.TabIndex = 2;
-            this.lblLogoFileName.Text = "Logo input file:";
-            // 
-            // FormMain
+            // modificationSettings
+            // 
+            this.modificationSettings.Location = new System.Drawing.Point(3, 16);
+            this.modificationSettings.ModifyEnabled = true;
+            this.modificationSettings.Name = "modificationSettings";
+            this.modificationSettings.Size = new System.Drawing.Size(291, 275);
+            this.modificationSettings.TabIndex = 0;
+            this.modificationSettings.ModifyClickedEvent += new RTD266xFlash.ModificationSettings.ModifyClickedHandler(this.btnModify_Click);
+            // 
+            // FormArduino
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1030,7 +584,7 @@
             this.Controls.Add(this.groupConnection);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MinimumSize = new System.Drawing.Size(800, 500);
-            this.Name = "FormMain";
+            this.Name = "FormArduino";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RTD266x EEPROM Flasher";
             this.Load += new System.EventHandler(this.FormMain_Load);
@@ -1048,19 +602,6 @@
             this.groupMode.ResumeLayout(false);
             this.groupMode.PerformLayout();
             this.groupModify.ResumeLayout(false);
-            this.groupModify.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picLogoForegroundColor)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picLogoBackgroundColor)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericLogoForegroundBlue)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericLogoForegroundGreen)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericLogoForegroundRed)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericBackgroundBlue)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericBackgroundGreen)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericBackgroundRed)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericLogoBackgroundBlue)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericLogoBackgroundGreen)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericLogoBackgroundRed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1096,7 +637,6 @@
         private System.Windows.Forms.Button btnClearLog;
         private System.Windows.Forms.Button btnEraseChip;
         private System.Windows.Forms.Button btnClearLock;
-        private System.Windows.Forms.Button btnDecodeFont;
         private System.Windows.Forms.TextBox txtReadStartAddress;
         private System.Windows.Forms.TextBox txtReadLength;
         private System.Windows.Forms.TextBox txtWriteStartAddress;
@@ -1110,41 +650,9 @@
         private System.Windows.Forms.Label lblWriteStartAddressHex;
         private System.Windows.Forms.Label lblWriteStartAddressDec;
         private System.Windows.Forms.GroupBox groupModify;
-        private System.Windows.Forms.Label lblLogoFileName;
-        private System.Windows.Forms.Button btnModify;
-        private System.Windows.Forms.Button btnLogoFileNameBrowse;
-        private System.Windows.Forms.TextBox txtLogoFileName;
         private System.Windows.Forms.CheckBox chkReadConsole;
         private System.Windows.Forms.CheckBox chkReadFile;
-        private System.Windows.Forms.Button btnAbout;
-        private System.Windows.Forms.CheckBox chkChangeLogo;
-        private System.Windows.Forms.CheckBox chkChangeBackgroundColor;
-        private System.Windows.Forms.CheckBox chkChangeLogoBackgroundColor;
-        private System.Windows.Forms.NumericUpDown numericLogoBackgroundBlue;
-        private System.Windows.Forms.Label lblLogoBackgroundBlue;
-        private System.Windows.Forms.NumericUpDown numericLogoBackgroundGreen;
-        private System.Windows.Forms.Label lblLogoBackgroundGreen;
-        private System.Windows.Forms.Label lblLogoBackgroundRed;
-        private System.Windows.Forms.NumericUpDown numericLogoBackgroundRed;
-        private System.Windows.Forms.NumericUpDown numericBackgroundBlue;
-        private System.Windows.Forms.Label lblBackgroundBlue;
-        private System.Windows.Forms.NumericUpDown numericBackgroundGreen;
-        private System.Windows.Forms.Label lblBackgroundGreen;
-        private System.Windows.Forms.Label lblBackgroundRed;
-        private System.Windows.Forms.NumericUpDown numericBackgroundRed;
-        private System.Windows.Forms.TextBox txtChangeHdmi;
-        private System.Windows.Forms.CheckBox chkChangeHdmi;
-        private System.Windows.Forms.CheckBox chkRemoveHdmi;
-        private System.Windows.Forms.NumericUpDown numericLogoForegroundBlue;
-        private System.Windows.Forms.Label lblLogoForegroundBlue;
-        private System.Windows.Forms.NumericUpDown numericLogoForegroundGreen;
-        private System.Windows.Forms.Label lblLogoForegroundGreen;
-        private System.Windows.Forms.Label lblLogoForegroundRed;
-        private System.Windows.Forms.NumericUpDown numericLogoForegroundRed;
-        private System.Windows.Forms.CheckBox chkChangeLogoForegroundColor;
-        private System.Windows.Forms.PictureBox picLogoBackgroundColor;
-        private System.Windows.Forms.PictureBox picBackgroundColor;
-        private System.Windows.Forms.PictureBox picLogoForegroundColor;
+        private ModificationSettings modificationSettings;
     }
 }
 

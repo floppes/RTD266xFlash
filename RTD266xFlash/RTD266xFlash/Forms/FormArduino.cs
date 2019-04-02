@@ -1,14 +1,13 @@
-﻿using RTD266xFlash.BackgroundWorkers;
-using System;
-using System.Drawing;
+﻿using System;
 using System.IO;
 using System.IO.Ports;
 using System.Text;
 using System.Windows.Forms;
+using RTD266xFlash.BackgroundWorkers;
 
-namespace RTD266xFlash
+namespace RTD266xFlash.Forms
 {
-    public partial class FormMain : Form
+    public partial class FormArduino : Form
     {
         private SerialPort _comPort;
 
@@ -16,7 +15,7 @@ namespace RTD266xFlash
 
         private bool _guiUpdate;
 
-        public FormMain()
+        public FormArduino()
         {
             InitializeComponent();
         }
@@ -42,54 +41,7 @@ namespace RTD266xFlash
             btnReadStatus.Enabled = connected;
             btnEraseChip.Enabled = connected;
             btnClearLock.Enabled = connected;
-            btnModify.Enabled = connected;
-        }
-
-        private void UpdateModifyFirmware()
-        {
-            _guiUpdate = true;
-
-            txtLogoFileName.Enabled = chkChangeLogo.Checked;
-            btnLogoFileNameBrowse.Enabled = chkChangeLogo.Checked;
-
-            numericLogoBackgroundRed.Enabled = chkChangeLogoBackgroundColor.Checked;
-            numericLogoBackgroundGreen.Enabled = chkChangeLogoBackgroundColor.Checked;
-            numericLogoBackgroundBlue.Enabled = chkChangeLogoBackgroundColor.Checked;
-            picLogoBackgroundColor.Enabled = chkChangeLogoBackgroundColor.Checked;
-
-            numericLogoForegroundRed.Enabled = chkChangeLogoForegroundColor.Checked;
-            numericLogoForegroundGreen.Enabled = chkChangeLogoForegroundColor.Checked;
-            numericLogoForegroundBlue.Enabled = chkChangeLogoForegroundColor.Checked;
-            picLogoForegroundColor.Enabled = chkChangeLogoForegroundColor.Checked;
-
-            numericBackgroundRed.Enabled = chkChangeBackgroundColor.Checked;
-            numericBackgroundGreen.Enabled = chkChangeBackgroundColor.Checked;
-            numericBackgroundBlue.Enabled = chkChangeBackgroundColor.Checked;
-            picBackgroundColor.Enabled = chkChangeBackgroundColor.Checked;
-
-            if (chkRemoveHdmi.Checked)
-            {
-                chkChangeHdmi.Checked = false;
-                chkChangeHdmi.Enabled = false;
-            }
-            else
-            {
-                chkChangeHdmi.Enabled = true;
-            }
-
-            if (chkChangeHdmi.Checked)
-            {
-                chkRemoveHdmi.Checked = false;
-                chkRemoveHdmi.Enabled = false;
-            }
-            else
-            {
-                chkRemoveHdmi.Enabled = true;
-            }
-
-            txtChangeHdmi.Enabled = chkChangeHdmi.Checked;
-
-            _guiUpdate = false;
+            modificationSettings.ModifyEnabled = connected;
         }
 
         private void UpdateBackgroundWorkerActive(bool active)
@@ -149,95 +101,6 @@ namespace RTD266xFlash
             groupWrite.Visible = expertMode;
             btnEraseChip.Visible = expertMode;
             btnClearLock.Visible = expertMode;
-            btnDecodeFont.Visible = expertMode;
-        }
-
-        private void ShowErrorMessageBox(string errorMessage)
-        {
-            MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-        }
-
-        private void FillColorBox(PictureBox pictureBox, int red, int green, int blue)
-        {
-            pictureBox.BackColor = Color.FromArgb(red, green, blue);
-        }
-
-        private void ShowColorDialog(NumericUpDown numericRed, NumericUpDown numericGreen, NumericUpDown numericBlue)
-        {
-            ColorDialog colorDialog = new ColorDialog();
-
-            colorDialog.Color = Color.FromArgb((int)numericRed.Value, (int)numericGreen.Value, (int)numericBlue.Value);
-
-            if (colorDialog.ShowDialog() == DialogResult.OK)
-            {
-                numericRed.Value = colorDialog.Color.R;
-                numericGreen.Value = colorDialog.Color.G;
-                numericBlue.Value = colorDialog.Color.B;
-            }
-        }
-
-        /// <summary>
-        /// Helper function to calculate the hash of a new firmware
-        /// </summary>
-        private void CalculateFirmwareHash()
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "All files (*.*)|*.*";
-
-            if (openFileDialog.ShowDialog() != DialogResult.OK)
-            {
-                return;
-            }
-
-            byte[] firmwareData = File.ReadAllBytes(openFileDialog.FileName);
-
-            HashInfo hashInfo = new HashInfo(0, 0x80000, string.Empty, new[]
-            {
-                new HashSkip(0xD2F6 + 0x1D, 48),
-                new HashSkip(0x12346, 16),
-                new HashSkip(0x13A31, 48),
-                new HashSkip(0x14733, 1),
-                new HashSkip(0x260D8, 1507)
-            });
-
-            MessageBox.Show(hashInfo.GetHash(firmwareData), "Firmware hash", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        /// <summary>
-        /// Helper function to identify a firmware
-        /// </summary>
-        private void IdentifyFirmware()
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "All files (*.*)|*.*";
-
-            byte[] firmware;
-
-            if (openFileDialog.ShowDialog() != DialogResult.OK)
-            {
-                return;
-            }
-
-            firmware = File.ReadAllBytes(openFileDialog.FileName);
-
-            Firmware detectedFirmware = null;
-
-            foreach (Firmware fw in Firmware.KnownFirmwares)
-            {
-                if (fw.CheckHash(firmware))
-                {
-                    detectedFirmware = fw;
-                    break;
-                }
-            }
-
-            if (detectedFirmware == null)
-            {
-                MessageBox.Show("No matching firmware found!", "Firmware identification", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-
-            MessageBox.Show($"Detected firmware is {detectedFirmware.Name}.", "Firmware identification", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         #region Background workers
@@ -323,7 +186,7 @@ namespace RTD266xFlash
 
             UpdateConnected(false);
             UpdateMode();
-            UpdateModifyFirmware();
+            modificationSettings.UpdateModifyFirmware();
 
             AppendConsoleText("Configure the connection and click \"Connect\"\r\n");
         }
@@ -560,19 +423,6 @@ namespace RTD266xFlash
             }
         }
 
-        private void btnAbout_Click(object sender, EventArgs e)
-        {
-            FormAbout formAbout = new FormAbout();
-
-            formAbout.ShowDialog();
-        }
-
-        private void btnDecodeFont_Click(object sender, EventArgs e)
-        {
-            FormFont formFont = new FormFont();
-            formFont.Show();
-        }
-
         private void txtReadStartAddress_TextChanged(object sender, EventArgs e)
         {
             if (_guiUpdate)
@@ -654,82 +504,22 @@ namespace RTD266xFlash
             Properties.Settings.Default.Save();
         }
 
-        private void btnLogoFileNameBrowse_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Images (*.png, *.bmp, *.tif, *.tiff)|*.png;*.bmp;*.tif;*.tiff";
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                string error;
-
-                if (!FontCoder.CheckFile(openFileDialog.FileName, FontCoder.FontWidthKedei, FontCoder.FontHeightKedei, out error))
-                {
-                    ShowErrorMessageBox(error);
-                }
-                else
-                {
-                    txtLogoFileName.Text = openFileDialog.FileName;
-                }
-            }
-        }
-
-        private void btnModify_Click(object sender, EventArgs e)
+        private void btnModify_Click()
         {
             UpdateBackgroundWorkerActive(true);
 
             ModifyFirmwareWorker changeLogoWorker = new ModifyFirmwareWorker(
                 _rtd,
-                chkChangeLogo.Checked ? txtLogoFileName.Text : null,
-                chkChangeLogoBackgroundColor.Checked ? Color.FromArgb((int)numericLogoBackgroundRed.Value, (int)numericLogoBackgroundGreen.Value, (int)numericLogoBackgroundBlue.Value) : Color.Empty,
-                chkChangeLogoForegroundColor.Checked ? Color.FromArgb((int)numericLogoForegroundRed.Value, (int)numericLogoForegroundGreen.Value, (int)numericLogoForegroundBlue.Value) : Color.Empty,
-                chkChangeBackgroundColor.Checked ? Color.FromArgb((int)numericBackgroundRed.Value, (int)numericBackgroundGreen.Value, (int)numericBackgroundBlue.Value) : Color.Empty,
-                chkRemoveHdmi.Checked,
-                chkChangeHdmi.Checked ? txtChangeHdmi.Text : null);
+                modificationSettings.LogoFileName,
+                modificationSettings.LogoBackgroundColor,
+                modificationSettings.LogoForegroundColor,
+                modificationSettings.BackgroundColor,
+                modificationSettings.RemoveHdmiPopup,
+                modificationSettings.HdmiReplacementText);
 
             changeLogoWorker.WorkerReportStatus += AppendConsoleText;
             changeLogoWorker.ModifyFirmwareWorkerFinished += ModifyFirmwareWorkerFinished;
             changeLogoWorker.Start();
-        }
-
-        private void chkModifyFirmware_CheckedChanged(object sender, EventArgs e)
-        {
-            if (_guiUpdate)
-            {
-                return;
-            }
-
-            UpdateModifyFirmware();
-        }
-
-        private void numericLogoBackground_ValueChanged(object sender, EventArgs e)
-        {
-            FillColorBox(picLogoBackgroundColor, (int)numericLogoBackgroundRed.Value, (int)numericLogoBackgroundGreen.Value, (int)numericLogoBackgroundBlue.Value);
-        }
-
-        private void numericLogoForeground_ValueChanged(object sender, EventArgs e)
-        {
-            FillColorBox(picLogoForegroundColor, (int)numericLogoForegroundRed.Value, (int)numericLogoForegroundGreen.Value, (int)numericLogoForegroundBlue.Value);
-        }
-
-        private void numericBackground_ValueChanged(object sender, EventArgs e)
-        {
-            FillColorBox(picBackgroundColor, (int)numericBackgroundRed.Value, (int)numericBackgroundGreen.Value, (int)numericBackgroundBlue.Value);
-        }
-
-        private void picLogoBackgroundColor_Click(object sender, EventArgs e)
-        {
-            ShowColorDialog(numericLogoBackgroundRed, numericLogoBackgroundGreen, numericLogoBackgroundBlue);
-        }
-
-        private void picLogoForegroundColor_Click(object sender, EventArgs e)
-        {
-            ShowColorDialog(numericLogoForegroundRed, numericLogoForegroundGreen, numericLogoForegroundBlue);
-        }
-
-        private void picBackgroundColor_Click(object sender, EventArgs e)
-        {
-            ShowColorDialog(numericBackgroundRed, numericBackgroundGreen, numericBackgroundBlue);
         }
 
         #endregion

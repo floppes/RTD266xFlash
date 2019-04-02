@@ -1,18 +1,26 @@
 # RTD266xFlash #
 
-This is a combination of an Arduino project and a C# application to read and write the firmware of the Realtek RTD266x flat panel display controller. The Arduino code is based on [ladyada's project](https://github.com/adafruit/Adafruit_RTD266X_I2CFlasher).
+This is a combination of an Arduino sketch, a Python script and a C# GUI application to read and write the firmware of the Realtek RTD266x flat panel display controller. The Arduino code is based on [ladyada's project](https://github.com/adafruit/Adafruit_RTD266X_I2CFlasher).
 
-There are special features for a 3.5" HDMI display manufactured by KeDei: you can replace the boot logo with a custom logo, change the background and foreground colors and modify the "HDMI" pop-up. The custom logo needs to be 204x72 pixels and may only contain black and white pixels.
+There are special features included for a 3.5" HDMI display manufactured by KeDei, which is equipped with an RTD2660: you can replace the boot logo with a custom logo, change the background and foreground colors and modify the "HDMI" pop-up. The custom logo needs to be 204x72 pixels and may only contain black and white pixels.
 
 ![Custom logo](custom_logo.png)
 
 ## Usage ##
 
-### Arduino ###
+In order to modify the RTD266x's firmware, you need to establish a connection to the chip. There are two ways to do that:
 
-Compile the sketch with the Arduino IDE and download it onto your Arduino. You can close the Arduino IDE afterwards.
+1. You can connect the display via HDMI to a Raspberry Pi, enable the I²C HDMI driver and read/write the firmware using the Python script without any additional hardware. The firmware will be stored in a file which you can open and modify with the C# GUI tool. The modified file is then written back to the display with the Python script.
 
-### Connecting ###
+2. You connect an Arduino to the display's I²C pins using a modified HDMI cable. The Arduino is connected to a PC/laptop and controlled with the C# GUI tool.
+
+If you don't have Microsoft Visual Studio to compile the C# GUI tool, you can download the EXE file from the [releases](https://github.com/floppes/RTD266xFlash/releases).
+
+### Method 1: Arduino ###
+
+Compile the RTD266xArduino sketch with the Arduino IDE and download it onto your Arduino. You can close the Arduino IDE afterwards.
+
+#### Connecting ####
 
 The communication between display and Arduino is done via I²C which is accessible on the VGA and HDMI ports of RTD266x. Connect SCL, SDA and GND with the corresponding Arduino pins.
 
@@ -32,15 +40,51 @@ A flashing user LED on the Arduino indicates a problem with the connection. Rese
 
 ![Setup example](setup.png)
 
-### GUI tool ###
+#### GUI tool ####
 
-If you don't have Microsoft Visual Studio to compile the C# tool, you can download the EXE file from the [releases](https://github.com/floppes/RTD266xFlash/releases).
-
-Select the COM port your Arduino is connected to and click **Connect**. If there was an error it will tell you what went wrong. You can click **Read status** to check the connection and read some info about the flash chip. It should return values different from 0x00 and 0xFF. If it doesn't, try again or reset the Arduino.
+Start RTD266xFlash.exe and select **Connect directly with an Arduino**. Select the COM port your Arduino is connected to and click **Connect**. If there was an error it will tell you what went wrong. You can click **Read status** to check the connection and read some info about the flash chip. It should return values different from 0x00 and 0xFF. If it doesn't, try again or reset the Arduino.
 
 ![Screenshot of GUI tool](screenshot.png)
 
-## Firmware modifications ##
+### Method 2: Firmware images with Python script ###
+
+For this method you need a Raspberry Pi running a current version of Raspbian or any derivative. Use a standard HDMI cable to connect the display to the Raspberry Pi. In your `/boot/config.txt` file you need to add the following line to enable the I²C on HDMI interface:
+
+`dtparam=i2c2_iknowwhatimdoing`
+
+You will also need to install the I²C Python library with this command:
+
+`sudo apt-get install python-smbus`
+
+After a reboot, enable the I²C driver by executing:
+
+`sudo raspi-config`
+
+Navigate to `Interfacing Options`, `I2C` and select `Yes`. Use `Back` and `Finish` to leave the configuration tool.
+
+You can then scan for I²C devices with this command:
+
+`sudo i2cdetect -y 2`
+
+It should find a device at address `4a`.
+
+To download the Python scripts, run the following commands:
+
+1. `cd ~`
+2. `git clone https://github.com/floppes/RTD266xFlash.git`
+3. `cd RTD266xFlash/RTD266xPy`
+
+You are now ready to read the display's firmware with this command:
+
+`python rtd266x_flash.py -r 524288 out.bin`
+
+The number is the firmware's size in bytes (512 x 1024 = 512 KB). This will take about 2 minutes. Transfer the file `out.bin` to your PC/laptop where you have the GUI tool RTD266xFlash.exe. Start it and select **Firmware images**. Select `out.bin` as the input file and configure the modifications you want to perform. Click **Modify firmware** and save the modified firmware file. Transfer the modified firmware file to the Raspberry Pi and run
+
+`python rtd266x_flash.py -d out.bin out_modified.bin`
+
+where `out_modified.bin` is the modified firmware file. This will write all modified sectors of file `out_modified.bin` to the display, skipping the unmodified sectors to speed things up. Enjoy your modified firmware!
+
+## Expert knowledge: details of firmware modifications ##
 
 **Attention:** Before you modify your firmware, create a backup of the original firmware!
 

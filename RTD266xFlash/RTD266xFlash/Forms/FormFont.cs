@@ -3,7 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-namespace RTD266xFlash
+namespace RTD266xFlash.Forms
 {
     public partial class FormFont : Form
     {
