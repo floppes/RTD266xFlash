@@ -4,7 +4,7 @@ This is a combination of an Arduino sketch, a Python script and a C# GUI applica
 
 There are special features included for a 3.5" HDMI display manufactured by KeDei, which is equipped with an RTD2660: you can replace the boot logo with a custom logo, change the background and foreground colors and modify the "HDMI" pop-up. The custom logo needs to be 204x72 pixels and may only contain black and white pixels.
 
-![Custom logo](custom_logo.png)
+![Custom logo](img/custom_logo.png)
 
 ## Usage ##
 
@@ -38,13 +38,13 @@ Connect the display and Arduino as mentioned above. Power on the display first, 
 
 A flashing user LED on the Arduino indicates a problem with the connection. Reset the Arduino to try again and use the GUI tool to read the error info.
 
-![Setup example](setup.png)
+![Setup example](img/setup.png)
 
 #### GUI tool ####
 
 Start RTD266xFlash.exe and select **Connect directly with an Arduino**. Select the COM port your Arduino is connected to and click **Connect**. If there was an error it will tell you what went wrong. You can click **Read status** to check the connection and read some info about the flash chip. It should return values different from 0x00 and 0xFF. If it doesn't, try again or reset the Arduino.
 
-![Screenshot of GUI tool](screenshot.png)
+![Screenshot of GUI tool](img/arduino_screen.png)
 
 ### Method 2: Firmware images with Python script ###
 
@@ -78,7 +78,13 @@ You are now ready to read the display's firmware with this command:
 
 `python rtd266x_flash.py -r 524288 out.bin`
 
-The number is the firmware's size in bytes (512 x 1024 = 512 KB). This will take about 2 minutes. Transfer the file `out.bin` to your PC/laptop where you have the GUI tool RTD266xFlash.exe. Start it and select **Firmware images**. Select `out.bin` as the input file and configure the modifications you want to perform. Click **Modify firmware** and save the modified firmware file. Transfer the modified firmware file to the Raspberry Pi and run
+The number is the firmware's size in bytes (512 x 1024 = 512 KB). This will take about 2 minutes. Transfer the file `out.bin` to your PC/laptop where you have the GUI tool RTD266xFlash.exe. Start it and select **Firmware images**. Select `out.bin` as the input file and configure the modifications you want to perform. Click **Modify firmware** and save the modified firmware file.
+
+![Screenshot of GUI tool](img/start_screen.png)
+
+![Screenshot of GUI tool](img/file_screen.png)
+
+Transfer the modified firmware file to the Raspberry Pi and run
 
 `python rtd266x_flash.py -d out.bin out_modified.bin`
 
