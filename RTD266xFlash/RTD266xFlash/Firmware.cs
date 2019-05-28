@@ -71,15 +71,26 @@
         /// </summary>
         public static readonly Firmware[] KnownFirmwares =
         {
-            new Firmware("KeDei v1.0", 0x260D8, 1507, 0x12346, 0xD237, 0x14733, 0x13A31, new[]
+            new Firmware("KeDei v1.0, panel type 1 (S90329A-DT035HV), FW variant 1", 0x260D8, 1507, 0x12346, 0xD237, 0x14733, 0x13A31, new[]
             {
                 new HashInfo(0, 0x80000, "8B3A476ED11F6B802D425851DF9A220F9CD11386B60C3FA5D05FEE404E00900B", new []
                 {
-                    new HashSkip(0xD237 + 0x1D, 48),   // CAdjustBackgroundColor
-                    new HashSkip(0x12346, 16),  // "HDMI"
-                    new HashSkip(0x13A31, 48),  // palette
-                    new HashSkip(0x14733, 1),   // CShowNote
+                    new HashSkip(0xD237 + 0x1D, 48), // CAdjustBackgroundColor
+                    new HashSkip(0x12346, 16), // "HDMI"
+                    new HashSkip(0x13A31, 48), // palette
+                    new HashSkip(0x14733, 1), // CShowNote
                     new HashSkip(0x260D8, 1507) // logo
+                })
+            }),
+            new Firmware("KeDei v1.0, panel type 1 (S90329A-DT035HV), FW variant 2", 0x260D8, 1507, 0x12346, 0xD237, 0x14733, 0x13A31, new[]
+            {
+                new HashInfo(0, 0x80000, "0EDEF68013E5483C74AFC56A90B2F59783DD444F73D8E9703AA3CFBFCA32C681", new []
+                {
+                    new HashSkip(0xD237 + 0x1D, 48),
+                    new HashSkip(0x12346, 16),
+                    new HashSkip(0x13A31, 48),
+                    new HashSkip(0x14733, 1),
+                    new HashSkip(0x260D8, 1507)
                 })
             }),
             new Firmware("KeDei v1.1, panel type 1 (SKY035S13B00-14439)", 0x260D8, 1507, 0x12346, 0xD432, 0x14733, 0x13A31, new[]
@@ -109,6 +120,17 @@
                 new HashInfo(0, 0x80000, "600DDF52D1FB753C3FA4EA81CE26BD6FF5CBEF0A3ECAAAE1CA8C726F2CDC3B17", new []
                 {
                     new HashSkip(0xD341 + 0x1D, 48),
+                    new HashSkip(0x12346, 16),
+                    new HashSkip(0x13A31, 48),
+                    new HashSkip(0x14733, 1),
+                    new HashSkip(0x260D8, 1507)
+                })
+            }),
+            new Firmware("KeDei v1.1, panel type 2 (SKY035S13D-199), FW variant 3", 0x260D8, 1507, 0x12346, 0xD2FA, 0x14733, 0x13A31, new[]
+            {
+                new HashInfo(0, 0x80000, "9BAA196CC3C30E577F5CC264DFA45146BCF578A3C4A48F8FFB8721194CA688AB", new []
+                {
+                    new HashSkip(0xD2FA + 0x1D, 48),
                     new HashSkip(0x12346, 16),
                     new HashSkip(0x13A31, 48),
                     new HashSkip(0x14733, 1),
@@ -159,7 +181,7 @@
                     new HashSkip(0x260D8, 1507)
                 })
             }),
-            new Firmware("KeDei v1.1, panel type ?, FW variant ?", 0x260D8, 1507, 0x12346, 0xD2F6, 0x14733, 0x13A31, new[]
+            new Firmware("KeDei v1.1, panel type unknown, FW variant unknown", 0x260D8, 1507, 0x12346, 0xD2F6, 0x14733, 0x13A31, new[]
             {
                 new HashInfo(0, 0x80000, "211094D05E4723E42BBCE0EE6CDBBD037F63C99E17FAAEC79969DC6977A955CA", new []
                 {
