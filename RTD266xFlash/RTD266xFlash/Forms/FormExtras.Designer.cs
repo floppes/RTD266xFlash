@@ -39,7 +39,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnIdentifyFirmware.Location = new System.Drawing.Point(12, 12);
             this.btnIdentifyFirmware.Name = "btnIdentifyFirmware";
-            this.btnIdentifyFirmware.Size = new System.Drawing.Size(144, 23);
+            this.btnIdentifyFirmware.Size = new System.Drawing.Size(183, 23);
             this.btnIdentifyFirmware.TabIndex = 6;
             this.btnIdentifyFirmware.Text = "Identify firmware...";
             this.btnIdentifyFirmware.UseVisualStyleBackColor = true;
@@ -51,7 +51,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCalculateHash.Location = new System.Drawing.Point(12, 41);
             this.btnCalculateHash.Name = "btnCalculateHash";
-            this.btnCalculateHash.Size = new System.Drawing.Size(144, 23);
+            this.btnCalculateHash.Size = new System.Drawing.Size(183, 23);
             this.btnCalculateHash.TabIndex = 7;
             this.btnCalculateHash.Text = "Calculate firmware hash...";
             this.btnCalculateHash.UseVisualStyleBackColor = true;
@@ -63,7 +63,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDecodeFont.Location = new System.Drawing.Point(12, 70);
             this.btnDecodeFont.Name = "btnDecodeFont";
-            this.btnDecodeFont.Size = new System.Drawing.Size(144, 23);
+            this.btnDecodeFont.Size = new System.Drawing.Size(183, 23);
             this.btnDecodeFont.TabIndex = 8;
             this.btnDecodeFont.Text = "Decode font...";
             this.btnDecodeFont.UseVisualStyleBackColor = true;
@@ -73,7 +73,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(168, 104);
+            this.ClientSize = new System.Drawing.Size(207, 104);
             this.Controls.Add(this.btnDecodeFont);
             this.Controls.Add(this.btnCalculateHash);
             this.Controls.Add(this.btnIdentifyFirmware);
