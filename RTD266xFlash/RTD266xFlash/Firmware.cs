@@ -181,11 +181,22 @@
                     new HashSkip(0x260D8, 1507)
                 })
             }),
-            new Firmware("KeDei v1.1, panel type unknown, FW variant unknown", 0x260D8, 1507, 0x12346, 0xD2F6, 0x14733, 0x13A31, new[]
+            new Firmware("KeDei v1.1, panel type unknown ('unknown 1'), FW variant unknown", 0x260D8, 1507, 0x12346, 0xD2F6, 0x14733, 0x13A31, new[]
             {
                 new HashInfo(0, 0x80000, "211094D05E4723E42BBCE0EE6CDBBD037F63C99E17FAAEC79969DC6977A955CA", new []
                 {
                     new HashSkip(0xD2F6 + 0x1D, 48),
+                    new HashSkip(0x12346, 16),
+                    new HashSkip(0x13A31, 48),
+                    new HashSkip(0x14733, 1),
+                    new HashSkip(0x260D8, 1507)
+                })
+            }),
+            new Firmware("KeDei version unknown, panel type unknown ('unknown 2'), FW variant unknown", 0x260D8, 1507, 0x12346, 0xD2A3, 0x14733, 0x13A31, new[]
+            {
+                new HashInfo(0, 0x80000, "D72AE270B4BCF437609E9D1C610F67F2F23B88231A10CEBD99673F8BF0C982AB", new []
+                {
+                    new HashSkip(0xD2A3 + 0x1D, 48),
                     new HashSkip(0x12346, 16),
                     new HashSkip(0x13A31, 48),
                     new HashSkip(0x14733, 1),
