@@ -67,10 +67,11 @@ namespace RTD266xFlash.Forms
 
             HashInfo hashInfo = new HashInfo(0, 0x80000, string.Empty, new[]
             {
-                new HashSkip(0xD2F6 + 0x1D, 48),
+                new HashSkip(0xD2C9 + 0x1D, 48),
                 new HashSkip(0x12346, 16),
                 new HashSkip(0x13A31, 48),
                 new HashSkip(0x14733, 1),
+                new HashSkip(0x15577, 1),
                 new HashSkip(0x260D8, 1507)
             });
 

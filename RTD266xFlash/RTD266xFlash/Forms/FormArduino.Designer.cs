@@ -201,7 +201,7 @@
             this.groupRead.Controls.Add(this.numericReadStartAddress);
             this.groupRead.Controls.Add(this.btnReadFileNameBrowse);
             this.groupRead.Controls.Add(this.txtReadFileName);
-            this.groupRead.Location = new System.Drawing.Point(12, 272);
+            this.groupRead.Location = new System.Drawing.Point(12, 294);
             this.groupRead.Name = "groupRead";
             this.groupRead.Size = new System.Drawing.Size(296, 151);
             this.groupRead.TabIndex = 3;
@@ -372,7 +372,7 @@
             this.groupWrite.Controls.Add(this.btnWriteFileNameBrowse);
             this.groupWrite.Controls.Add(this.lblWriteFileName);
             this.groupWrite.Controls.Add(this.txtWriteFileName);
-            this.groupWrite.Location = new System.Drawing.Point(314, 315);
+            this.groupWrite.Location = new System.Drawing.Point(314, 337);
             this.groupWrite.Name = "groupWrite";
             this.groupWrite.Size = new System.Drawing.Size(296, 108);
             this.groupWrite.TabIndex = 4;
@@ -472,7 +472,7 @@
             this.groupMisc.Controls.Add(this.btnReadStatus);
             this.groupMisc.Location = new System.Drawing.Point(12, 158);
             this.groupMisc.Name = "groupMisc";
-            this.groupMisc.Size = new System.Drawing.Size(296, 108);
+            this.groupMisc.Size = new System.Drawing.Size(296, 130);
             this.groupMisc.TabIndex = 5;
             this.groupMisc.TabStop = false;
             this.groupMisc.Text = "Miscellaneous";
@@ -556,7 +556,7 @@
             this.groupModify.Controls.Add(this.modificationSettings);
             this.groupModify.Location = new System.Drawing.Point(314, 12);
             this.groupModify.Name = "groupModify";
-            this.groupModify.Size = new System.Drawing.Size(296, 297);
+            this.groupModify.Size = new System.Drawing.Size(296, 319);
             this.groupModify.TabIndex = 7;
             this.groupModify.TabStop = false;
             this.groupModify.Text = "Modify firmware";
@@ -566,7 +566,7 @@
             this.modificationSettings.Location = new System.Drawing.Point(3, 16);
             this.modificationSettings.ModifyEnabled = true;
             this.modificationSettings.Name = "modificationSettings";
-            this.modificationSettings.Size = new System.Drawing.Size(291, 275);
+            this.modificationSettings.Size = new System.Drawing.Size(291, 297);
             this.modificationSettings.TabIndex = 0;
             this.modificationSettings.ModifyClickedEvent += new RTD266xFlash.ModificationSettings.ModifyClickedHandler(this.btnModify_Click);
             // 

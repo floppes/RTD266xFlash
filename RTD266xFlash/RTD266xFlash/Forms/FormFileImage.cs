@@ -116,6 +116,8 @@ namespace RTD266xFlash.Forms
                 FirmwareModifier.ReplaceHdmiPopup(modificationSettings.HdmiReplacementText, firmware, detectedFirmware);
             }
 
+            FirmwareModifier.ToggleNoSignalPopup(!modificationSettings.RemoveNoSignalPopup, firmware, detectedFirmware);
+
             string outputFileName = Path.GetFileNameWithoutExtension(inputFileName) + "_modified.bin";
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();

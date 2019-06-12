@@ -131,6 +131,17 @@ namespace RTD266xFlash
             }
         }
 
+        /// <summary>
+        /// Remove "No Signal" popup
+        /// </summary>
+        public bool RemoveNoSignalPopup
+        {
+            get
+            {
+                return chkRemoveNoSignal.Checked;
+            }
+        }
+
         #endregion
 
         public ModificationSettings()

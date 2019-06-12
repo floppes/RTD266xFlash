@@ -60,6 +60,7 @@
             this.btnLogoFileNameBrowse = new System.Windows.Forms.Button();
             this.txtLogoFileName = new System.Windows.Forms.TextBox();
             this.lblLogoFileName = new System.Windows.Forms.Label();
+            this.chkRemoveNoSignal = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLogoForegroundColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLogoBackgroundColor)).BeginInit();
@@ -396,7 +397,7 @@
             // 
             // btnModify
             // 
-            this.btnModify.Location = new System.Drawing.Point(3, 247);
+            this.btnModify.Location = new System.Drawing.Point(3, 270);
             this.btnModify.Name = "btnModify";
             this.btnModify.Size = new System.Drawing.Size(114, 23);
             this.btnModify.TabIndex = 40;
@@ -430,10 +431,22 @@
             this.lblLogoFileName.TabIndex = 37;
             this.lblLogoFileName.Text = "Logo input file:";
             // 
+            // chkRemoveNoSignal
+            // 
+            this.chkRemoveNoSignal.AutoSize = true;
+            this.chkRemoveNoSignal.Location = new System.Drawing.Point(3, 247);
+            this.chkRemoveNoSignal.Name = "chkRemoveNoSignal";
+            this.chkRemoveNoSignal.Size = new System.Drawing.Size(161, 17);
+            this.chkRemoveNoSignal.TabIndex = 69;
+            this.chkRemoveNoSignal.Text = "Remove \"No Signal\" pop-up";
+            this.chkRemoveNoSignal.UseVisualStyleBackColor = true;
+            this.chkRemoveNoSignal.CheckedChanged += new System.EventHandler(this.chkModifyFirmware_CheckedChanged);
+            // 
             // ModificationSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.chkRemoveNoSignal);
             this.Controls.Add(this.picBackgroundColor);
             this.Controls.Add(this.picLogoForegroundColor);
             this.Controls.Add(this.picLogoBackgroundColor);
@@ -467,7 +480,7 @@
             this.Controls.Add(this.txtLogoFileName);
             this.Controls.Add(this.lblLogoFileName);
             this.Name = "ModificationSettings";
-            this.Size = new System.Drawing.Size(291, 275);
+            this.Size = new System.Drawing.Size(291, 297);
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLogoForegroundColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLogoBackgroundColor)).EndInit();
@@ -519,5 +532,6 @@
         private System.Windows.Forms.Button btnLogoFileNameBrowse;
         private System.Windows.Forms.TextBox txtLogoFileName;
         private System.Windows.Forms.Label lblLogoFileName;
+        private System.Windows.Forms.CheckBox chkRemoveNoSignal;
     }
 }

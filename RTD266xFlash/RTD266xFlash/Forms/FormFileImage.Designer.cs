@@ -40,20 +40,26 @@
             // 
             // groupModify
             // 
+            this.groupModify.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupModify.Controls.Add(this.modificationSettings);
             this.groupModify.Location = new System.Drawing.Point(13, 71);
             this.groupModify.Name = "groupModify";
-            this.groupModify.Size = new System.Drawing.Size(296, 297);
+            this.groupModify.Size = new System.Drawing.Size(296, 318);
             this.groupModify.TabIndex = 8;
             this.groupModify.TabStop = false;
             this.groupModify.Text = "Modification options";
             // 
             // modificationSettings
             // 
+            this.modificationSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.modificationSettings.Location = new System.Drawing.Point(3, 16);
             this.modificationSettings.ModifyEnabled = true;
             this.modificationSettings.Name = "modificationSettings";
-            this.modificationSettings.Size = new System.Drawing.Size(291, 275);
+            this.modificationSettings.Size = new System.Drawing.Size(291, 296);
             this.modificationSettings.TabIndex = 0;
             this.modificationSettings.ModifyClickedEvent += new RTD266xFlash.ModificationSettings.ModifyClickedHandler(this.modificationSettings_ModifyClickedEvent);
             // 
@@ -101,7 +107,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(321, 378);
+            this.ClientSize = new System.Drawing.Size(321, 401);
             this.Controls.Add(this.groupInputFile);
             this.Controls.Add(this.groupModify);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

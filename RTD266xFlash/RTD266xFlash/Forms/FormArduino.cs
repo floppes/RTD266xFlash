@@ -515,7 +515,8 @@ namespace RTD266xFlash.Forms
                 modificationSettings.LogoForegroundColor,
                 modificationSettings.BackgroundColor,
                 modificationSettings.RemoveHdmiPopup,
-                modificationSettings.HdmiReplacementText);
+                modificationSettings.HdmiReplacementText,
+                modificationSettings.RemoveNoSignalPopup);
 
             changeLogoWorker.WorkerReportStatus += AppendConsoleText;
             changeLogoWorker.ModifyFirmwareWorkerFinished += ModifyFirmwareWorkerFinished;

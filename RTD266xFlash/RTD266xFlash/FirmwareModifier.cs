@@ -204,5 +204,17 @@ namespace RTD266xFlash
 
             firmware[detectedFirmware.HdmiStringOffset + offset] = 0x00;
         }
+
+        public static void ToggleNoSignalPopup(bool enabled, byte[] firmware, Firmware detectedFirmware)
+        {
+            if (enabled)
+            {
+                firmware[detectedFirmware.NoSignalOffset] = 0x12; // LCALL
+            }
+            else
+            {
+                firmware[detectedFirmware.NoSignalOffset] = 0x22; // RET
+            }
+        }
     }
 }

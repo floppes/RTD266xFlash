@@ -19,10 +19,12 @@ namespace RTD266xFlash.BackgroundWorkers
 
         private readonly string _replaceHdmi;
 
+        private readonly bool _removeNoSignal;
+
         public delegate void ModifyFirmwareWorkerFinishedEvent(RTD266x.Result result);
         public event ModifyFirmwareWorkerFinishedEvent ModifyFirmwareWorkerFinished;
 
-        public ModifyFirmwareWorker(RTD266x rtd, string logoFileName, Color logoBackground, Color logoForeground, Color displayBackground, bool removeHdmi, string replaceHdmi) : base(rtd)
+        public ModifyFirmwareWorker(RTD266x rtd, string logoFileName, Color logoBackground, Color logoForeground, Color displayBackground, bool removeHdmi, string replaceHdmi, bool removeNoSignal) : base(rtd)
         {
             _logoFileName = logoFileName;
             _logoBackground = logoBackground;
@@ -30,6 +32,7 @@ namespace RTD266xFlash.BackgroundWorkers
             _displayBackground = displayBackground;
             _removeHdmi = removeHdmi;
             _replaceHdmi = replaceHdmi;
+            _removeNoSignal = removeNoSignal;
         }
 
         protected override void _backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -208,6 +211,31 @@ namespace RTD266xFlash.BackgroundWorkers
             }
 
             result = WritePatchedSector(firmware, detectedFirmware.ShowNoteOffset);
+
+            if (result != RTD266x.Result.Ok)
+            {
+                e.Result = result;
+                return;
+            }
+
+            if (_removeNoSignal)
+            {
+                ReportStatus("Removing \"No Signal\" pop-up...");
+
+                FirmwareModifier.ToggleNoSignalPopup(false, firmware, detectedFirmware);
+
+                ReportStatus("ok\r\n");
+            }
+            else
+            {
+                ReportStatus("Enabling \"No Signal\" pop-up...");
+
+                FirmwareModifier.ToggleNoSignalPopup(true, firmware, detectedFirmware);
+
+                ReportStatus("ok\r\n");
+            }
+
+            result = WritePatchedSector(firmware, detectedFirmware.NoSignalOffset);
 
             if (result != RTD266x.Result.Ok)
             {
