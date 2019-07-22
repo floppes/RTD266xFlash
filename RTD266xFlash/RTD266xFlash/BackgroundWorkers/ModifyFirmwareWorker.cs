@@ -117,7 +117,7 @@ namespace RTD266xFlash.BackgroundWorkers
 
             if (detectedFirmware == null)
             {
-                ReportStatus("Error! Unknown firmware. You can send your firmware to the author (floppes@gmx.de), maybe it can be added to the known firmwares.\r\n");
+                ReportStatus("Error! Unknown firmware. You can send your firmware and the name of the display (printed on the cable on the back side) to the author (floppes@gmx.de), maybe it can be added to the known firmwares.\r\n");
                 e.Result = result;
                 return;
             }
