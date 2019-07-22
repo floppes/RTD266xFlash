@@ -199,6 +199,18 @@
                     new HashSkip(0x260D8, 1507)
                 })
             }),
+            new Firmware("KeDei v1.1, panel type 4 (LGH-3509), FW variant 3", 0x260D8, 1507, 0x12346, 0xD258, 0x14733, 0x13A31, 0x15577, new[]
+            {
+                new HashInfo(0, 0x80000, "4BDF3565609A5DC28030FDB490B0DE5A336B159B4BF434CB859D7B2C06FDC4FD", new []
+                {
+                    new HashSkip(0xD258 + 0x1D, 48),
+                    new HashSkip(0x12346, 16),
+                    new HashSkip(0x13A31, 48),
+                    new HashSkip(0x14733, 1),
+                    new HashSkip(0x15577, 1),
+                    new HashSkip(0x260D8, 1507)
+                })
+            }),
             new Firmware("KeDei v1.1, panel type unknown ('unknown 1'), FW variant unknown", 0x260D8, 1507, 0x12346, 0xD2F6, 0x14733, 0x13A31, 0x15577, new[]
             {
                 new HashInfo(0, 0x80000, "3E2DD7ECE098A69EB18C011DECCD162B6D55B4EDADFC965EAF5E2DD690414F7E", new []
