@@ -201,7 +201,7 @@ class RTD266x():
 	def setup_chip_commands(self, jedec_id):
 		manufacturer_id = (jedec_id >> 16) & 0xFF
 		
-		if (manufacturer_id == 0xEF or manufacturer_id == 0xC8 or manufacturer_id == 0x1C):
+		if (manufacturer_id == 0xEF or manufacturer_id == 0xC8 or manufacturer_id == 0x1C or manufacturer_id == 0x5E):
 			self._i2c_write_reg(0x62, 0x06) # flash write enable op code
 			self._i2c_write_reg(0x63, 0x50) # flash write enable for volatile status register op code
 			self._i2c_write_reg(0x6A, 0x03) # flash read op code

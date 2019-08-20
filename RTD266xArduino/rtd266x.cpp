@@ -45,6 +45,7 @@ static const flash_desc_t flash_devices[] =
   {"T25S40"     , 0xC84013,      512,       256, 32},
   // Unknown
   {"T25S40"     , 0x1C3113,      512,       256, 32},
+  {"T25S40"     , 0x5E6013,      512,       256, 32},
   {NULL , 0, 0, 0, 0}
 };
 
