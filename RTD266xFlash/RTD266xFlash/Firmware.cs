@@ -211,6 +211,18 @@
                     new HashSkip(0x260D8, 1507)
                 })
             }),
+            new Firmware("KeDei v1.1, panel type 5 (SKY035S7D-11039, 800x480), FW variant 1", 0x260D8, 1507, 0x12346, 0xD46E, 0x14733, 0x13A31, 0x15577, new[]
+            {
+                new HashInfo(0, 0x80000, "E4FA1EA5A1D1AD2646883E654C8919E4497946C2688D410969BDB87342B46C96", new []
+                {
+                    new HashSkip(0xD46E + 0x1D, 48),
+                    new HashSkip(0x12346, 16),
+                    new HashSkip(0x13A31, 48),
+                    new HashSkip(0x14733, 1),
+                    new HashSkip(0x15577, 1),
+                    new HashSkip(0x260D8, 1507)
+                })
+            }),
             new Firmware("KeDei v1.1, panel type unknown ('unknown 1'), FW variant unknown", 0x260D8, 1507, 0x12346, 0xD2F6, 0x14733, 0x13A31, 0x15577, new[]
             {
                 new HashInfo(0, 0x80000, "3E2DD7ECE098A69EB18C011DECCD162B6D55B4EDADFC965EAF5E2DD690414F7E", new []
