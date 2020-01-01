@@ -38,6 +38,7 @@ static const flash_desc_t flash_devices[] =
   {"MX25L3205"  , 0xC22016, 4 * 1024,       256, 64},
   {"MX25L6405"  , 0xC22017, 8 * 1024,       256, 64},
   {"MX25L8005"  , 0xC22014,     1024,       256, 64},*/
+  {"MX25L4005"  , 0xC22013,     1024,       256, 64},
   // Microchip
   {"SST25VF512" , 0xBF4800,       64,       256, 32},
   {"SST25VF032" , 0xBF4A00, 4 * 1024,       256, 32},
@@ -217,6 +218,15 @@ bool setup_chip_commands(uint32_t jedec_id)
       i2c_write_reg(0x6B, 0x0B); // flash fast read op code
       i2c_write_reg(0x6D, 0x02); // flash page program op code
       i2c_write_reg(0x6E, 0x05); // flash read status low op code
+      return true;
+    case 0xC2:
+      // These are the codes for Macronix
+      i2c_write_reg(0x62, 0x6);  // Flash Write enable op code
+      i2c_write_reg(0x63, 0x50); // Flash Write register op code
+      i2c_write_reg(0x6a, 0x3);  // Flash Read op code.
+      i2c_write_reg(0x6b, 0xb);  // Flash Fast read op code.
+      i2c_write_reg(0x6d, 0x2);  // Flash program op code.
+      i2c_write_reg(0x6e, 0x5);  // Flash read status op code.
       return true;
   }
 
