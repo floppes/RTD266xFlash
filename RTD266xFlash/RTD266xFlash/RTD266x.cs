@@ -385,8 +385,28 @@ namespace RTD266xFlash
 
             switch (status.ManufacturerId)
             {
+                case 0x1F:
+                    status.Manufacturer = "Adesto Technologies/Atmel Corporation";
+                    break;
+
+                case 0x20:
+                    status.Manufacturer = "STMicroelectronics";
+                    break;
+
+                case 0xBF:
+                    status.Manufacturer = "Microchip Technology";
+                    break;
+
+                case 0xC2:
+                    status.Manufacturer = "Macronix International";
+                    break;
+
                 case 0xC8:
                     status.Manufacturer = "Bright Moon Semiconductor Co., Ltd";
+                    break;
+
+                case 0xEF:
+                    status.Manufacturer = "Winbond Electronics Corporation";
                     break;
 
                 default:
