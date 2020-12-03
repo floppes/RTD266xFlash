@@ -390,6 +390,7 @@ namespace RTD266xFlash
                     break;
 
                 case 0x20:
+                case 0x85:
                     status.Manufacturer = "STMicroelectronics";
                     break;
 

@@ -74,7 +74,7 @@ namespace RTD266xFlash.BackgroundWorkers
 
             result = _rtd.ReadStatus(out status);
 
-            if (result != RTD266x.Result.Ok || (status.ManufacturerId != 0xC8 && status.ManufacturerId != 0x1C && status.ManufacturerId != 0xC2) || status.DeviceId != 0x12)
+            if (result != RTD266x.Result.Ok || (status.ManufacturerId != 0xC8 && status.ManufacturerId != 0x1C && status.ManufacturerId != 0xC2 && status.ManufacturerId != 0x85) || status.DeviceId != 0x12)
             {
                 ReportStatus("Error! Cannot identify chip.\r\n");
                 e.Result = result;
