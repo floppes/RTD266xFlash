@@ -39,11 +39,13 @@ static const flash_desc_t flash_devices[] =
   {"MX25L6405"  , 0xC22017, 8 * 1024,       256, 64},
   {"MX25L8005"  , 0xC22014,     1024,       256, 64},*/
   {"MX25L4005"  , 0xC22013,     1024,       256, 64},
-  // Microchip
+  // Manufacturer: Microchip
   {"SST25VF512" , 0xBF4800,       64,       256, 32},
   {"SST25VF032" , 0xBF4A00, 4 * 1024,       256, 32},
-  // Bright Moon
+  // Manufacturer: Bright Moon
   {"T25S40"     , 0xC84013,      512,       256, 32},
+  // Manufacturer: Puya
+  {"P25Q40H"    , 0x856013, 4 * 1024,       256, 32},
   // Unknown
   {"T25S40"     , 0x1C3113,      512,       256, 32},
   {"T25S40"     , 0x5E6013,      512,       256, 32},
