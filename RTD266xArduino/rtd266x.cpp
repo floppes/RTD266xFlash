@@ -215,6 +215,7 @@ bool setup_chip_commands(uint32_t jedec_id)
     case 0xC8: // Bright Moon
     case 0xC2: // Macronix
     case 0x1C: // Unknown
+    case 0x5E: // Unknown
     case 0x85: // STMicroelectronics
       i2c_write_reg(0x62, 0x06); // flash write enable op code
       i2c_write_reg(0x63, 0x50); // flash write enable for volatile status register op code
