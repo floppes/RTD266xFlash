@@ -39,11 +39,21 @@ class RTD266xArduino
 
   def read_error_code
     write_command([CMD[:GET_ERROR]])
-    resp = read_response(7)
+    resp = read_response(7, timeout: 1)
     raise "mismatched reply" if resp[0] != CMD[:GET_ERROR]
     raise "res #{resp[1]}" if resp[1] != RES[:OK]
     [ERR.lookup(resp[2]), (resp[3] << 24) | (resp[4] << 16) | (resp[5] << 8) | resp[6]]
   end
+
+  def read_segment(address, length)
+    write_command([CMD[:READ], (address >> 16) & 0xFF, (address >> 8) & 0xFF, address & 0xFF, (length >> 16) & 0xFF, (length >> 8) & 0xFF, length & 0xFF])
+    resp = read_response(2 + length, timeout: 5)
+    raise "mismatched reply" if resp[0] != CMD[:READ]
+    raise "res #{resp[1]}" if resp[1] != RES[:OK]
+    resp[2..-1].pack('C*')
+  end
+
+  private
 
   def write_command(cmd)
     checksum = cmd.inject(0, &:+) % 256
@@ -51,12 +61,12 @@ class RTD266xArduino
     @s.write(bytes)
   end
 
-  def read_response(len)
+  def read_response(len, timeout:)
     len += 1 # checksum
 
     start = Time.now
-    while @read_buf.length < len && Time.now - start < 1
-      buf = @s.read(len - @read_buf.length)
+    while @read_buf.length < len && Time.now - start < timeout
+      buf = @s.read(len - @read_buf.length).b
       @read_buf << buf
       if @read_buf.length < len
         sleep 0.005
@@ -70,22 +80,48 @@ class RTD266xArduino
       end
       r[0...-1]
     else
-      raise "timeout, incomplete read (wanted #{len-1}+1, got #{@read_buf.inspect} so far)"
+      raise "timeout, incomplete read (wanted #{len-1}+1, got #{@read_buf.inspect} (#{@read_buf.length} bytes) so far)"
     end
   end
 end
 
 arduino = RTD266xArduino.new
 retries = 5
+puts "connecting ..."
 begin
   code, info = arduino.read_error_code
 rescue => e
   if retries > 0
-    puts "got #{e}, retrying"
     retries -= 1
+    puts "* got #{e}, retrying #{retries} more times ..."
     retry
   end
   raise
 end
 
-puts "got #{code} (#{info})"
+if code != :NONE
+  puts "connecting got #{code} (#{info})"
+  exit 1
+end
+
+puts "connected!"
+
+puts "dumping 4MiB of flash in 512 byte increments"
+f = File.open("flash-contents.bin", "wb")
+addr = 0
+top = 4 * 1024 * 1024
+start = Time.now
+while addr < top
+  print "["
+  print("X" * (addr * 80 / top))
+  print(" " * ((top - addr) * 80 / top))
+  print "] #{"/-\\|"[(Time.now - start).to_i % 4]} #{addr.to_s.reverse.scan(/\d{3}|.+/).join(",").reverse.rjust(9)} \r"
+  STDOUT.flush
+
+  segment = arduino.read_segment(addr, 512)
+  f.write(segment)
+  addr += 512
+end
+f.close
+  f.write(segment)
+
