@@ -112,6 +112,33 @@ class RTD266xArduino
   end
 end
 
+def spinner(addr, top, start, code: nil, length: 80)
+  xs = addr * length / top
+  spaces = length - xs
+  print "["
+  print("X" * xs)
+  print(" " * spaces)
+  print "] #{code ? "#{code} " : ""}#{"/-\\|"[(Time.now - start).to_i % 4]} #{addr.to_s.reverse.scan(/\d{3}|.+/).join(",").reverse.rjust(9)} \r"
+  STDOUT.flush
+end
+
+def usage
+  puts "usage:"
+  puts "  ruby #$0 dump"
+  puts "    dumps 4MiB of flash to 'flash-contents.bin'"
+  puts "  ruby #$0 write FILE"
+  puts "    writes FILE to flash. it should probably be a multiple of 4096 bytes long."
+  puts "  ruby #$0 verify FILE"
+  puts "    verifies FILE in flash"
+  exit 1
+end
+
+REQ_RES_SIZE = 256
+
+if ARGV.length == 0 || !%w(dump write verify).include?(ARGV[0])
+  usage
+end
+
 arduino = RTD266xArduino.new
 retries = 5
 puts "connecting ..."
@@ -135,27 +162,19 @@ puts "connected!"
 
 cmd = ARGV.shift
 
-def spinner(addr, top, start, code: nil, length: 80)
-  xs = addr * length / top
-  spaces = length - xs
-  print "["
-  print("X" * xs)
-  print(" " * spaces)
-  print "] #{code ? "#{code} " : ""}#{"/-\\|"[(Time.now - start).to_i % 4]} #{addr.to_s.reverse.scan(/\d{3}|.+/).join(",").reverse.rjust(9)} \r"
-  STDOUT.flush
-end
-
 if cmd == "dump"
-  puts "dumping 4MiB of flash in 512 byte increments"
+  usage if ARGV.any?
+
+  puts "dumping 4MiB of flash in #{REQ_RES_SIZE} byte increments"
   f = File.open("flash-contents.bin", "wb")
   addr = 0
   top = 4 * 1024 * 1024
   start = Time.now
   while addr < top
     spinner(addr, top, start)
-    segment = arduino.read_segment(addr, 512)
+    segment = arduino.read_segment(addr, REQ_RES_SIZE)
     f.write(segment)
-    addr += 512
+    addr += REQ_RES_SIZE
   end
   spinner(addr, top, start)
   print "\n"
@@ -163,10 +182,10 @@ if cmd == "dump"
 
 elsif cmd == "write"
   file = ARGV.shift
-  raise "specify a filename" unless file
+  usage if ARGV.any? || !file
 
   content = File.open(file, "rb", &:read)
-  puts "writing #{content.length} bytes to flash in 256 byte increments"
+  puts "writing #{content.length} bytes to flash in #{REQ_RES_SIZE} byte increments"
 
   addr = 0
   start = Time.now
@@ -176,30 +195,33 @@ elsif cmd == "write"
       arduino.erase_sector_containing(addr)
     end
     spinner(addr, content.length, start, code: 'W')
-    arduino.write_data(addr, content[addr...addr+256])
-    addr += 256
+    arduino.write_data(addr, content[addr...addr+REQ_RES_SIZE])
+    addr += REQ_RES_SIZE
   end
   spinner(addr, content.length, start)
   print "\n"
 
 elsif cmd == "verify"
   file = ARGV.shift
-  raise "specify a filename" unless file
+  usage if ARGV.any? || !file
 
   content = File.open(file, "rb", &:read)
-  puts "verifying #{content.length} bytes in flash in 512 byte"
+  puts "verifying #{content.length} bytes in flash in #{REQ_RES_SIZE} byte increments"
 
   addr = 0
   start = Time.now
+  errors = false
   while addr < content.length
     spinner(addr, content.length, start)
-    segment = arduino.read_segment(addr, 512)
-    if segment != content[addr...addr+512]
+    segment = arduino.read_segment(addr, REQ_RES_SIZE)
+    if segment != content[addr...addr+REQ_RES_SIZE]
       print "\n"
-      puts "verify error in bytes #{addr}...#{addr+512}"
+      errors = true
+      puts "verify error in bytes #{addr}...#{addr+REQ_RES_SIZE}"
     end
-    addr += 512
+    addr += REQ_RES_SIZE
   end
   spinner(addr, content.length, start)
   print "\n"
+  exit 2 if errors
 end
