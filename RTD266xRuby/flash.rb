@@ -115,6 +115,7 @@ end
 def spinner(addr, top, start, code: nil, length: 80)
   xs = addr * length / top
   spaces = length - xs
+  spaces = 0 if spaces < 0
   print "["
   print("X" * xs)
   print(" " * spaces)
@@ -126,8 +127,10 @@ def usage
   puts "usage:"
   puts "  ruby #$0 dump"
   puts "    dumps 4MiB of flash to 'flash-contents.bin'"
-  puts "  ruby #$0 write FILE"
+  puts "  ruby #$0 write FILE [OFFSET LENGTH]"
   puts "    writes FILE to flash. it should probably be a multiple of 4096 bytes long."
+  puts "    if OFFSET and LENGTH specified, only write sectors containing bytes starting"
+  puts "    from OFFSET for LENGTH bytes"
   puts "  ruby #$0 verify FILE"
   puts "    verifies FILE in flash"
   exit 1
@@ -182,23 +185,38 @@ if cmd == "dump"
 
 elsif cmd == "write"
   file = ARGV.shift
-  usage if ARGV.any? || !file
+  usage if !file
+  offset = 0
+  length = nil
+  if ARGV.length == 2
+    offset = ARGV.shift.to_i
+    length = ARGV.shift.to_i
+  end
+  usage if ARGV.any?
 
   content = File.open(file, "rb", &:read)
-  puts "writing #{content.length} bytes to flash in #{REQ_RES_SIZE} byte increments"
+  length = content.length if length.nil?
+  if offset > 0
+    new_offset = offset & ~0xfff
+    length += (offset - new_offset)
+    offset = new_offset
+    # make sure length is whole sectors
+    length = (length + 0xfff) & ~0xfff
+  end
+  puts "writing #{length} bytes from offset #{offset} to flash in #{REQ_RES_SIZE} byte increments"
 
-  addr = 0
+  addr = offset
   start = Time.now
-  while addr < content.length
+  while addr < offset + length
     if addr % 4096 == 0
-      spinner(addr, content.length, start, code: 'E')
+      spinner(addr, offset + length, start, code: 'E')
       arduino.erase_sector_containing(addr)
     end
-    spinner(addr, content.length, start, code: 'W')
+    spinner(addr, offset + length, start, code: 'W')
     arduino.write_data(addr, content[addr...addr+REQ_RES_SIZE])
     addr += REQ_RES_SIZE
   end
-  spinner(addr, content.length, start)
+  spinner(addr, offset + length, start)
   print "\n"
 
 elsif cmd == "verify"
