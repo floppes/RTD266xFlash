@@ -46,6 +46,22 @@ Start RTD266xFlash.exe and select **Connect directly with an Arduino**. Select t
 
 ![Screenshot of GUI tool](img/arduino_screen.png)
 
+#### Ruby tool ####
+
+Instead of the GUI tool written in C#, you can use a Ruby tool on the command line written by [kivikakk](https://github.com/kivikakk).
+
+To read the flash into the file `flash-contents.bin`, call it like this:
+
+`ruby flash.rb SERIAL dump`
+
+Replace `SERIAL` with your serial port (for example `COM1` on Windows, `/dev/ttyACM0` on Linux or `/dev/cu.usbmodem3201` on a Mac).
+
+To write back the firmware, use this command:
+
+`ruby flash.rb SERIAL write FILE [OFFSET LENGTH]`
+
+Call the tool without parameters to get a detailled description of its parameters.
+
 ### Method 2: Firmware images with Python script ###
 
 For this method you need a Raspberry Pi running a current version of Raspbian or any derivative. Use a standard HDMI cable to connect the display to the Raspberry Pi. In your `/boot/config.txt` file you need to add the following line to enable the I²C on HDMI interface:
