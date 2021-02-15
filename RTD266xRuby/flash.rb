@@ -32,7 +32,7 @@ class RTD266xArduino
     SETUP_CMDS: 4,
   }
 
-  def initialize(port: '/dev/cu.usbmodem3201', baud: 115200)
+  def initialize(port:, baud:)
     @s = Serial.new(port, baud)
     @read_buf = +"".b
   end
@@ -125,24 +125,46 @@ end
 
 def usage
   puts "usage:"
-  puts "  ruby #$0 dump"
+  puts "  ruby #$0 SERIAL dump"
   puts "    dumps 4MiB of flash to 'flash-contents.bin'"
-  puts "  ruby #$0 write FILE [OFFSET LENGTH]"
+  puts
+  puts "  ruby #$0 SERIAL write FILE [OFFSET LENGTH]"
   puts "    writes FILE to flash. it should probably be a multiple of 4096 bytes long."
   puts "    if OFFSET and LENGTH specified, only write sectors containing bytes starting"
   puts "    from OFFSET for LENGTH bytes"
-  puts "  ruby #$0 verify FILE"
+  puts
+  puts "  ruby #$0 SERIAL verify FILE"
   puts "    verifies FILE in flash"
+  puts
+  puts "Specify SERIAL as a filesystem device node representing the serial connection to"
+  puts "the RTD266xArduino device.  You may also specify baud rate with SERIAL:BAUD,"
+  puts "otherwise defaults to 115200."
+  puts
+  puts "example usage:"
+  puts "  ruby #$0 /dev/cu.usbmodem3201 dump"
+  puts "    Dump 4MiB of flash on the device connected at /dev/cu.usbmodem3201 to"
+  puts "    flash-contents.bin."
+  puts
+  puts "  ruby #$0 /dev/cu.usbserial-AH069ECE:9600 write firmware.bin"
+  puts "    Writes firmware.bin to the device connected at /dev/cu.usbserial-AH069ECE at"
+  puts "    9600 baud."
   exit 1
 end
 
 REQ_RES_SIZE = 256
 
-if ARGV.length == 0 || !%w(dump write verify).include?(ARGV[0])
+if ARGV.length < 2 || !%w(dump write verify).include?(ARGV[1])
   usage
 end
 
-arduino = RTD266xArduino.new
+port, baud = ARGV.shift.split(":")
+if baud
+  baud = Integer(baud)
+else
+  baud = 115200
+end
+
+arduino = RTD266xArduino.new(port: port, baud: baud)
 retries = 5
 puts "connecting ..."
 begin
