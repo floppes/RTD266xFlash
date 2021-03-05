@@ -203,6 +203,8 @@ namespace RTD266xFlash.Forms
             _comPort.StopBits = StopBits.One;
             _comPort.DataBits = 8;
             _comPort.Handshake = Handshake.None;
+            _comPort.DtrEnable = true;
+            _comPort.RtsEnable = true;
 
             AppendConsoleText("Connecting...\r\n");
 
