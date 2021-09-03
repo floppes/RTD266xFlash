@@ -10,9 +10,9 @@ There are special features included for a 3.5" HDMI display manufactured by KeDe
 
 In order to modify the RTD266x's firmware, you need to establish a connection to the chip. There are two ways to do that:
 
-1. You can connect the display via HDMI to a Raspberry Pi, enable the I²C HDMI driver and read/write the firmware using the Python script without any additional hardware. The firmware will be stored in a file which you can open and modify with the C# GUI tool. The modified file is then written back to the display with the Python script.
+1. You can connect the display via HDMI to a Raspberry Pi, enable the IÂ²C HDMI driver and read/write the firmware using the Python script without any additional hardware. The firmware will be stored in a file which you can open and modify with the C# GUI tool. The modified file is then written back to the display with the Python script.
 
-2. You connect an Arduino to the display's I²C pins using a modified HDMI cable. The Arduino is connected to a PC/laptop and controlled with the C# GUI tool.
+2. You connect an Arduino to the display's IÂ²C pins using a modified HDMI cable. The Arduino is connected to a PC/laptop and controlled with the C# GUI tool.
 
 If you don't have Microsoft Visual Studio to compile the C# GUI tool, you can download the EXE file from the [releases](https://github.com/floppes/RTD266xFlash/releases).
 
@@ -22,7 +22,7 @@ Compile the RTD266xArduino sketch with the Arduino IDE and download it onto your
 
 #### Connecting ####
 
-The communication between display and Arduino is done via I²C which is accessible on the VGA and HDMI ports of RTD266x. Connect SCL, SDA and GND with the corresponding Arduino pins.
+The communication between display and Arduino is done via IÂ²C which is accessible on the VGA and HDMI ports of RTD266x. Connect SCL, SDA and GND with the corresponding Arduino pins.
 
 For an Arduino Uno and an HDMI connector type A, this would be:
 
@@ -64,23 +64,37 @@ Call the tool without parameters to get a detailled description of its parameter
 
 ### Method 2: Firmware images with Python script ###
 
-For this method you need a Raspberry Pi running a current version of Raspbian or any derivative. Use a standard HDMI cable to connect the display to the Raspberry Pi. In your `/boot/config.txt` file you need to add the following line to enable the I²C on HDMI interface:
+For this method you need a Raspberry Pi running a current version of Raspbian or any derivative. Use a standard HDMI cable to connect the display to the Raspberry Pi. In your `/boot/config.txt` file you need to add the following line to enable the IÂ²C on HDMI interface:
 
 `dtparam=i2c2_iknowwhatimdoing`
 
-You will also need to install the I²C Python library with this command:
+For RP4 and modern firmware need to replace line
+
+`dtoverlay=vc4-fkms-v3d`
+
+to
+
+`dtoverlay=vc4-kms-v3d`
+
+You will also need to install the IÂ²C Python library with this command:
 
 `sudo apt-get install python-smbus`
 
-After a reboot, enable the I²C driver by executing:
+After a reboot, enable the IÂ²C driver by executing:
 
 `sudo raspi-config`
 
 Navigate to `Interfacing Options`, `I2C` and select `Yes`. Use `Back` and `Finish` to leave the configuration tool.
 
-You can then scan for I²C devices with this command:
+Get list of i2c bus
 
-`sudo i2cdetect -y 2`
+`i2cdetect -l`
+
+You can then scan for IÂ²C devices with this command:
+
+`sudo i2cdetect -y I2CBUS`
+
+where **I2CBUS** is integer portId
 
 It should find a device at address `4a`.
 
@@ -92,7 +106,7 @@ To download the Python scripts, run the following commands:
 
 You are now ready to read the display's firmware with this command:
 
-`python rtd266x_flash.py -r 524288 out.bin`
+`python rtd266x_flash.py -i I2CBUS -r 524288 out.bin`
 
 The number is the firmware's size in bytes (512 x 1024 = 512 KB). This will take about 2 minutes. Transfer the file `out.bin` to your PC/laptop where you have the GUI tool RTD266xFlash.exe. Start it and select **Firmware images**. Select `out.bin` as the input file and configure the modifications you want to perform. Click **Modify firmware** and save the modified firmware file.
 
@@ -102,7 +116,7 @@ The number is the firmware's size in bytes (512 x 1024 = 512 KB). This will take
 
 Transfer the modified firmware file to the Raspberry Pi and run
 
-`python rtd266x_flash.py -d out.bin out_modified.bin`
+`python rtd266x_flash.py -i I2CBUS -d out.bin out_modified.bin`
 
 where `out_modified.bin` is the modified firmware file. This will write all modified sectors of file `out_modified.bin` to the display, skipping the unmodified sectors to speed things up. Enjoy your modified firmware!
 
