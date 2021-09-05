@@ -68,6 +68,14 @@ For this method you need a Raspberry Pi running a current version of Raspbian or
 
 `dtparam=i2c2_iknowwhatimdoing`
 
+For the Raspberry Pi 4 and modern firmware you need to change the line
+
+`dtoverlay=vc4-fkms-v3d`
+
+to
+
+`dtoverlay=vc4-kms-v3d`
+
 You will also need to install the I²C Python library with this command:
 
 `sudo apt-get install python-smbus`
@@ -78,9 +86,15 @@ After a reboot, enable the I²C driver by executing:
 
 Navigate to `Interfacing Options`, `I2C` and select `Yes`. Use `Back` and `Finish` to leave the configuration tool.
 
-You can then scan for I²C devices with this command:
+Get a list of available I²C busses:
 
-`sudo i2cdetect -y 2`
+`i2cdetect -l`
+
+You can then scan for I²C devices with this command on a specific bus:
+
+`sudo i2cdetect -y I2CBUS`
+
+where `I2CBUS` is the bus number you got from the previous command, i.e. `sudo i2cdetect -y 2`.
 
 It should find a device at address `4a`.
 
@@ -92,9 +106,9 @@ To download the Python scripts, run the following commands:
 
 You are now ready to read the display's firmware with this command:
 
-`python rtd266x_flash.py -r 524288 out.bin`
+`python rtd266x_flash.py -i I2CBUS -r 524288 out.bin`
 
-The number is the firmware's size in bytes (512 x 1024 = 512 KB). This will take about 2 minutes. Transfer the file `out.bin` to your PC/laptop where you have the GUI tool RTD266xFlash.exe. Start it and select **Firmware images**. Select `out.bin` as the input file and configure the modifications you want to perform. Click **Modify firmware** and save the modified firmware file.
+Replace `I2CBUS` with your bus number. The number after parameter `-r` is the firmware's size in bytes (512 x 1024 = 512 KB). This will take about 2 minutes. Transfer the file `out.bin` to your PC/laptop where you have the GUI tool RTD266xFlash.exe. Start it and select **Firmware images**. Select `out.bin` as the input file and configure the modifications you want to perform. Click **Modify firmware** and save the modified firmware file.
 
 ![Screenshot of GUI tool](img/start_screen.png)
 
@@ -102,9 +116,9 @@ The number is the firmware's size in bytes (512 x 1024 = 512 KB). This will take
 
 Transfer the modified firmware file to the Raspberry Pi and run
 
-`python rtd266x_flash.py -d out.bin out_modified.bin`
+`python rtd266x_flash.py -i I2CBUS -d out.bin out_modified.bin`
 
-where `out_modified.bin` is the modified firmware file. This will write all modified sectors of file `out_modified.bin` to the display, skipping the unmodified sectors to speed things up. Enjoy your modified firmware!
+where `I2CBUS` is the bus number and `out_modified.bin` is the modified firmware file. This will write all modified sectors of file `out_modified.bin` to the display, skipping the unmodified sectors to speed things up. Enjoy your modified firmware!
 
 ## Expert knowledge: details of firmware modifications ##
 
