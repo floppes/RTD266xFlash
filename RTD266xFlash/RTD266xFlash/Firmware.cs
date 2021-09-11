@@ -235,7 +235,7 @@
                     new HashSkip(0x260D8, 1507)
                 })
             }),
-            new Firmware("KeDei KD0350AV02, panel type unknown ('unknown 1'), FW variant 2", 0x260D8, 1507, 0x12346, 0xD237, 0x14733, 0x13A31, 0x15577, new[]
+            new Firmware("KeDei KD0350AV02, panel type unknown ('unknown 1'), FW variant 2", 0x260D8, 1507, 0x12346, 0xD44C, 0x14733, 0x13A31, 0x15577, new[]
             {
                 new HashInfo(0, 0x80000, "B30F3589118335BB54D07E666EFB4DB37DEF4D5C3947B43A8B5A120D655EA9B9", new []
                 {
