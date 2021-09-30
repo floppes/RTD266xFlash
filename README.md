@@ -44,6 +44,8 @@ A flashing user LED on the Arduino indicates a problem with the connection. Rese
 
 Start RTD266xFlash.exe and select **Connect directly with an Arduino**. Select the COM port your Arduino is connected to and click **Connect**. If there was an error it will tell you what went wrong. You can click **Read status** to check the connection and read some info about the flash chip. It should return values different from 0x00 and 0xFF. If it doesn't, try again or reset the Arduino.
 
+If you get an error about an unknown JEDEC id, uncomment or add the correct JEDEC id in `rtd266x.cpp`. Compile and download the sketch again to your Arduino and try again.
+
 ![Screenshot of GUI tool](img/arduino_screen.png)
 
 #### Ruby tool ####
