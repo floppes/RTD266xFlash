@@ -283,7 +283,7 @@
                     new HashSkip(0x260D8, 1507)
                 })
             }),
-            new Firmware("7\" KeDei KD070V02 1024x600", 0x260D8, 1507, 0x12346, 0xD04F, 0x14733, 0x13A31, 0x15577, new[]
+            new Firmware("7\" KeDei KD070V02 1024x600 FW variant 1", 0x260D8, 1507, 0x12346, 0xD04F, 0x14733, 0x13A31, 0x15577, new[]
             {
                 new HashInfo(0, 0x80000, "6EEF496354199EA4147F6EF5589194D7FD547CC43BC33E3567A0D2411A84C5AC", new []
                 {
@@ -292,6 +292,18 @@
                     new HashSkip(0x13A31, 48),
                     new HashSkip(0x14733, 1),
                     new HashSkip(0x15577, 1),
+                    new HashSkip(0x260D8, 1507)
+                })
+            }),
+            new Firmware("7\" KeDei KD070V02 1024x600 FW variant 2", 0x260D8, 1507, 0x12346, 0xD27E, 0x1473B, 0x13A31, 0x1557F, new[]
+            {
+                new HashInfo(0, 0x80000, "8B070F377F700ABA6D59D265DBC19CE2DF8B56DA384EF884325BD29A5EDE88A0", new []
+                {
+                    new HashSkip(0xD27E + 0x1D, 48),
+                    new HashSkip(0x12346, 16),
+                    new HashSkip(0x13A31, 48),
+                    new HashSkip(0x1473B, 1),
+                    new HashSkip(0x1557F, 1),
                     new HashSkip(0x260D8, 1507)
                 })
             })
