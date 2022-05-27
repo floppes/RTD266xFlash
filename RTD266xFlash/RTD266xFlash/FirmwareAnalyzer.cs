@@ -103,7 +103,7 @@ namespace RTD266xFlash
             {
                 output.AppendLine($"Logo length: {analyzedFirmware.MaxLogoLength}");
                 output.AppendLine();
-                output.AppendLine($"Hash: {analyzedFirmware.Hashes[0].Hash}");
+                output.AppendLine($"Hash: {analyzedFirmware.HashInfo.Hash}");
                 output.AppendLine();
             }
 
@@ -232,7 +232,7 @@ namespace RTD266xFlash
 
             HashInfo hashInfo = new HashInfo(0, 0x80000, hash, hashSkips.ToArray());
 
-            analyzedFirmware = new Firmware("automatically analyzed", logoOffset, maxLogoLength, hdmiStringOffset, adjustBackgroundColorOffset, showNoteOffset, paletteOffset, noSignalOffset, new HashInfo[] { hashInfo });
+            analyzedFirmware = new Firmware("automatically analyzed", logoOffset, maxLogoLength, hdmiStringOffset, adjustBackgroundColorOffset, showNoteOffset, paletteOffset, noSignalOffset, hashInfo);
 
             return analyzedFirmware;
         }
