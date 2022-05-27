@@ -306,6 +306,18 @@
                     new HashSkip(0x1557F, 1),
                     new HashSkip(0x260D8, 1507)
                 })
+            }),
+            new Firmware("RTD2660 board, panel type 1, FW variant 1", 0x260AE, 1075, 0x1241B, 0xD546, 0x14537, 0x13B01, 0x1554B, new[]
+            {
+                new HashInfo(0, 0x80000, "7F649ED082611385FC7E4767009217E91DB23821BBA2031858A2CCC659A14F8A", new []
+                {
+                    new HashSkip(0xD546 + 0x1D, 48),
+                    new HashSkip(0x1241B, 16),
+                    new HashSkip(0x13B01, 48),
+                    new HashSkip(0x14537, 1),
+                    new HashSkip(0x1554B, 1),
+                    new HashSkip(0x260AE, 1075)
+                })
             })
         };
 
