@@ -14,8 +14,8 @@ namespace RTD266xFlash
 
         private static FirmwarePattern _patternHdmi = new FirmwarePattern(
                 "sHDMI",
-                new byte[] { 0x19, 0x14, 0x1E, 0x1F, 0x1A },
-                new byte[] { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF },
+                new byte[] { 0x19, 0x14, 0x1E, 0x1F, 0x1A, 0x00, 0x2E },
+                new byte[] { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF },
                 0);
 
         private static FirmwarePattern _patternPalette = new FirmwarePattern(
