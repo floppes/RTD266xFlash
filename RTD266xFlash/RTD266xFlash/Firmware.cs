@@ -298,6 +298,17 @@
                     new HashSkip(0x1554B, 1),
                     new HashSkip(0x260AE, 1075)
                 })
+            ),
+            new Firmware("7\" MPI7002, FW variant 1", 0x261A2, 2271, 0x1235A, 0xD150, 0x14455, 0x13A59, 0x150F2,
+                new HashInfo(0, 0x80000, "C5EC6796D1BE968B6D8C4514567179360D0723E60D83FED92ED5C89BC6E6CDAB", new []
+                {
+                    new HashSkip(0xD150 + 0x1D, 48),
+                    new HashSkip(0x1235A, 16),
+                    new HashSkip(0x13A59, 48),
+                    new HashSkip(0x14455, 1),
+                    new HashSkip(0x150F2, 1),
+                    new HashSkip(0x261A2, 2271)
+                })
             )
         };
 
