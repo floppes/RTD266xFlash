@@ -45,7 +45,9 @@
     <Compile Include="BackgroundWorkers\ReadWorker.cs" />
     <Compile Include="BackgroundWorkers\WriteWorker.cs" />
     <Compile Include="Firmware.cs" />
+    <Compile Include="FirmwareAnalyzer.cs" />
     <Compile Include="FirmwareModifier.cs" />
+    <Compile Include="FirmwarePattern.cs" />
     <Compile Include="Font.cs" />
     <Compile Include="Forms\FormAbout.cs">
       <SubType>Form</SubType>

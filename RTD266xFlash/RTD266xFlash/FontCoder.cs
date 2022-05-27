@@ -327,6 +327,13 @@ namespace RTD266xFlash
             }
         }
 
+        public static int DecodeLength(byte[] sourceData)
+        {
+            int length = (sourceData[8] << 8) | sourceData[9];
+
+            return length + 10;
+        }
+
         public static Image Decode(byte[] sourceData, int fontWidth, int fontHeight)
         {
             Dictionary<string, byte> runLengthCodes = new Dictionary<string, byte>();

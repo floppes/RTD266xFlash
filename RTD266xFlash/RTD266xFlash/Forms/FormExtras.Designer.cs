@@ -31,6 +31,7 @@
             this.btnIdentifyFirmware = new System.Windows.Forms.Button();
             this.btnCalculateHash = new System.Windows.Forms.Button();
             this.btnDecodeFont = new System.Windows.Forms.Button();
+            this.btnAnalyzeFirmware = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnIdentifyFirmware
@@ -40,7 +41,7 @@
             this.btnIdentifyFirmware.Location = new System.Drawing.Point(12, 12);
             this.btnIdentifyFirmware.Name = "btnIdentifyFirmware";
             this.btnIdentifyFirmware.Size = new System.Drawing.Size(183, 23);
-            this.btnIdentifyFirmware.TabIndex = 6;
+            this.btnIdentifyFirmware.TabIndex = 0;
             this.btnIdentifyFirmware.Text = "Identify firmware...";
             this.btnIdentifyFirmware.UseVisualStyleBackColor = true;
             this.btnIdentifyFirmware.Click += new System.EventHandler(this.btnIdentifyFirmware_Click);
@@ -52,7 +53,7 @@
             this.btnCalculateHash.Location = new System.Drawing.Point(12, 41);
             this.btnCalculateHash.Name = "btnCalculateHash";
             this.btnCalculateHash.Size = new System.Drawing.Size(183, 23);
-            this.btnCalculateHash.TabIndex = 7;
+            this.btnCalculateHash.TabIndex = 1;
             this.btnCalculateHash.Text = "Calculate firmware hash...";
             this.btnCalculateHash.UseVisualStyleBackColor = true;
             this.btnCalculateHash.Click += new System.EventHandler(this.btnCalculateHash_Click);
@@ -61,19 +62,32 @@
             // 
             this.btnDecodeFont.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDecodeFont.Location = new System.Drawing.Point(12, 70);
+            this.btnDecodeFont.Location = new System.Drawing.Point(12, 99);
             this.btnDecodeFont.Name = "btnDecodeFont";
             this.btnDecodeFont.Size = new System.Drawing.Size(183, 23);
-            this.btnDecodeFont.TabIndex = 8;
+            this.btnDecodeFont.TabIndex = 3;
             this.btnDecodeFont.Text = "Decode font...";
             this.btnDecodeFont.UseVisualStyleBackColor = true;
             this.btnDecodeFont.Click += new System.EventHandler(this.btnDecodeFont_Click);
+            // 
+            // btnAnalyzeFirmware
+            // 
+            this.btnAnalyzeFirmware.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAnalyzeFirmware.Location = new System.Drawing.Point(12, 70);
+            this.btnAnalyzeFirmware.Name = "btnAnalyzeFirmware";
+            this.btnAnalyzeFirmware.Size = new System.Drawing.Size(183, 23);
+            this.btnAnalyzeFirmware.TabIndex = 2;
+            this.btnAnalyzeFirmware.Text = "Analyze firmware...";
+            this.btnAnalyzeFirmware.UseVisualStyleBackColor = true;
+            this.btnAnalyzeFirmware.Click += new System.EventHandler(this.btnAnalyzeFirmware_Click);
             // 
             // FormExtras
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(207, 104);
+            this.ClientSize = new System.Drawing.Size(207, 134);
+            this.Controls.Add(this.btnAnalyzeFirmware);
             this.Controls.Add(this.btnDecodeFont);
             this.Controls.Add(this.btnCalculateHash);
             this.Controls.Add(this.btnIdentifyFirmware);
@@ -92,5 +106,6 @@
         private System.Windows.Forms.Button btnIdentifyFirmware;
         private System.Windows.Forms.Button btnCalculateHash;
         private System.Windows.Forms.Button btnDecodeFont;
+        private System.Windows.Forms.Button btnAnalyzeFirmware;
     }
 }

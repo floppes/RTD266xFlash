@@ -78,6 +78,21 @@ namespace RTD266xFlash.Forms
             MessageBox.Show(hashInfo.GetHash(firmwareData), "Firmware hash", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        private void btnAnalyzeFirmware_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "All files (*.*)|*.*";
+
+            if (openFileDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            byte[] firmwareData = File.ReadAllBytes(openFileDialog.FileName);
+
+            MessageBox.Show(FirmwareAnalyzer.AnalyzeFirmwareToString(firmwareData), "Analyze firmware result", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
         private void btnDecodeFont_Click(object sender, EventArgs e)
         {
             FormFont formFont = new FormFont();

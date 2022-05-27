@@ -117,13 +117,25 @@ namespace RTD266xFlash.BackgroundWorkers
 
             if (detectedFirmware == null)
             {
-                ReportStatus("Error! Unknown firmware. You can send your firmware and the name of the display (printed on the cable on the back side) to the author (floppes@gmx.de), maybe it can be added to the known firmwares.\r\n");
-                e.Result = result;
-                return;
-            }
+                ReportStatus("Error! Unknown firmware. You can send your firmware and the name of the display (printed on the cable on the back side) to the author (floppes@gmx.de). Maybe it can be added to the known firmwares.\r\n");
+                ReportStatus("Trying to automatically analyze the firmware... ");
 
-            ReportStatus("ok\r\n");
-            ReportStatus($"Detected firmware is {detectedFirmware.Name}\r\n");
+                detectedFirmware = FirmwareAnalyzer.AnalyzeFirmware(firmware);
+
+                if (firmware == null)
+                {
+                    ReportStatus("Error! The firmware could not be analyzed automatically.");
+                    e.Result = result;
+                    return;
+                }
+
+                ReportStatus("Success! The firmware was analyzed automatically. It may be possible to apply the modifications. Please note that this may not be 100 % accurate.\r\n");
+            }
+            else
+            {
+                ReportStatus("ok\r\n");
+                ReportStatus($"Detected firmware is {detectedFirmware.Name}\r\n");
+            }
 
             if (!string.IsNullOrEmpty(_logoFileName))
             {

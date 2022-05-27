@@ -81,8 +81,26 @@ namespace RTD266xFlash.Forms
 
             if (detectedFirmware == null)
             {
-                ShowErrorMessage("Error! Unknown firmware. You can send your firmware and the name of the display (printed on the cable on the back side) to the author (floppes@gmx.de), maybe it can be added to the known firmwares.");
-                return;
+                ShowErrorMessage("Error! Unknown firmware. You can send your firmware and the name of the display (printed on the cable on the back side) to the author (floppes@gmx.de). Maybe it can be added to the known firmwares.");
+
+                if (MessageBox.Show("Do you want to try to automatically analyze the firmware?", "Automatically analyze firmware", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    detectedFirmware = FirmwareAnalyzer.AnalyzeFirmware(firmware);
+
+                    if (detectedFirmware == null)
+                    {
+                        ShowErrorMessage("Error! The firmware could not be analyzed automatically.");
+                        return;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Success! The firmware was analyzed automatically. It may be possible to apply the modifications. Please note that this may not be 100 % accurate.", "Automatically analyze firmware", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                else
+                {
+                    return;
+                }
             }
 
             if (!string.IsNullOrEmpty(modificationSettings.LogoFileName))
@@ -135,6 +153,10 @@ namespace RTD266xFlash.Forms
                     ShowErrorMessage($"Could not write file {saveFileDialog.FileName}! {ex.Message}");
                     return;
                 }
+            }
+            else
+            {
+                return;
             }
 
             MessageBox.Show($"The modified firmware was successfully saved to {saveFileDialog.FileName}.\r\n\r\nYou can now flash it to your RTD266x chip.", "Modify firmware", MessageBoxButtons.OK, MessageBoxIcon.Information);
