@@ -1,4 +1,4 @@
-# RTD266xFlashX
+# <img src="icon_anim.gif" align="left">RTD266xFlashX 
 RTD266xFlashX is an improved version of RTD266xFlash, Introducing multiple features aswell as fixing others (see more below)
 
 This repository only contains changes made to the C# application, for anything else please see the original application this version is based on
@@ -35,6 +35,15 @@ To install them, just extract the archive in a folder named `'firmware_presets'`
 
 # Updated Design & Look
 I've edited the application front-end a lot, making it look nicer without being over the top, intensive or generic, i've also designed the icons & animations, which were based on a shell32.dll icon (icon id 13).
+
+<details>
+  <summary>Image Gallery</summary>
+  <img src="img/preview.PNG"></br>
+  <img src="icon_anim_noMotherboard.gif"></br>
+  <img src="icon.png"></br>
+  <img src="icon_noMotherboard.png"></br>
+  <img src="icon_base.png"></br>
+</details>
 
 # Credits
 - <a href="https://github.com/floppes/">floppes</a> - <a href="https://github.com/floppes/RTD266xFlash">RTD266xFlash</a>
