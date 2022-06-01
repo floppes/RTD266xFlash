@@ -1,7 +1,7 @@
-# <img src="icon_anim.gif" align="right">RTD266xFlashX 
-RTD266xFlashX is an improved version of RTD266xFlash, Introducing multiple features aswell as fixing others (see more below)
+# <img src="icon_anim.gif" align="right">RTD266xFlashX
+RTD266xFlashX is an improved version of <a href="https://github.com/floppes/RTD266xFlash">RTD266xFlash</a>, Introducing multiple features aswell as fixing others (see more below)
 
-This repository only contains changes made to the C# application, for anything else please see the original application this version is based on
+This repository only contains changes made to the C# side, for anything else please see <a href="https://github.com/floppes/RTD266xFlash">the original application</a> this version is based on
 
 # Main Changes
 <pre>
@@ -44,6 +44,11 @@ I've edited the application front-end a lot, making it look nicer without being 
   <img src="icon_noMotherboard.png"></br>
   <img src="icon_base.png"></br>
 </details>
+
+# Build Requirements
+(also applies for <a href="https://github.com/floppes/RTD266xFlash">RTD266xFlash</a>)
+- Visual Studio 2019
+- .NET 4.5.2
 
 # Credits
 - <a href="https://github.com/floppes/">floppes</a> - <a href="https://github.com/floppes/RTD266xFlash">RTD266xFlash</a>
