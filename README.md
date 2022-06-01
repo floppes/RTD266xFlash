@@ -1,4 +1,4 @@
-# <img src="icon_anim.gif" align="left">RTD266xFlashX 
+# <img src="icon_anim.gif" align="right">RTD266xFlashX 
 RTD266xFlashX is an improved version of RTD266xFlash, Introducing multiple features aswell as fixing others (see more below)
 
 This repository only contains changes made to the C# application, for anything else please see the original application this version is based on
