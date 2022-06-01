@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5DDD2333-B8C0-4077-9F3D-2D1169F0559C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>RTD266xFlash</RootNamespace>
+    <AssemblyName>RTD266xFlashX</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>RTD266xFlash.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>RTD266xFlash.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Be.Windows.Forms.HexBox, Version=1.4.7.25836, Culture=neutral, PublicKeyToken=e0e5adf0ebc99863, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Be.Windows.Forms.HexBox.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.VisualBasic.Compatibility" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BackgroundWorkers\BaseWorker.cs" />
+    <Compile Include="BackgroundWorkers\ModifyFirmwareWorker.cs" />
+    <Compile Include="BackgroundWorkers\ReadWorker.cs" />
+    <Compile Include="BackgroundWorkers\WriteWorker.cs" />
+    <Compile Include="Firmware.cs" />
+    <Compile Include="FirmwareAnalyzer.cs" />
+    <Compile Include="FirmwareModifier.cs" />
+    <Compile Include="FirmwarePattern.cs" />
+    <Compile Include="FirmwarePresetEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FirmwarePresetEditor.Designer.cs">
+      <DependentUpon>FirmwarePresetEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Font.cs" />
+    <Compile Include="Forms\FormAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAbout.Designer.cs">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormExtras.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormExtras.Designer.cs">
+      <DependentUpon>FormExtras.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormFileImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormFileImage.Designer.cs">
+      <DependentUpon>FormFileImage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormFirmwareEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormFirmwareEditor.Designer.cs">
+      <DependentUpon>FormFirmwareEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormFont.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormFont.Designer.cs">
+      <DependentUpon>FormFont.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormArduino.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormArduino.Designer.cs">
+      <DependentUpon>FormArduino.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormProcessing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormProcessing.Designer.cs">
+      <DependentUpon>FormProcessing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormSettings.Designer.cs">
+      <DependentUpon>FormSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormStart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormStart.Designer.cs">
+      <DependentUpon>FormStart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HashInfo.cs" />
+    <Compile Include="FontCoder.cs" />
+    <Compile Include="HashSkip.cs" />
+    <Compile Include="ModificationSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ModificationSettings.Designer.cs">
+      <DependentUpon>ModificationSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RTD266x.cs" />
+    <EmbeddedResource Include="FirmwarePresetEditor.resx">
+      <DependentUpon>FirmwarePresetEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAbout.resx">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormExtras.resx">
+      <DependentUpon>FormExtras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFileImage.resx">
+      <DependentUpon>FormFileImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFirmwareEditor.resx">
+      <DependentUpon>FormFirmwareEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFont.resx">
+      <DependentUpon>FormFont.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormArduino.resx">
+      <DependentUpon>FormArduino.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormProcessing.resx">
+      <DependentUpon>FormProcessing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormSettings.resx">
+      <DependentUpon>FormSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormStart.resx">
+      <DependentUpon>FormStart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModificationSettings.resx">
+      <DependentUpon>ModificationSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="RTD266xFlash.ruleset" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon_base.png" />
+    <None Include="icon_noMotherboard.png" />
+    <None Include="icon.png" />
+    <None Include="icon_anim_noMotherboard.gif" />
+    <None Include="icon_anim.gif" />
+    <None Include="icon.gif" />
+    <Content Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Forms\Controls\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
