@@ -5,3 +5,4 @@ RTD266xPy/rtd266x/smbus.py
 Gemfile.lock
 .bundle
 flash-contents.bin
+__pycache__

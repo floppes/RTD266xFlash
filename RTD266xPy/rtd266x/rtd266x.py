@@ -1,5 +1,5 @@
-from crc import CRC
-from smbus import SMBus
+from rtd266x.crc import CRC
+from rtd266x.smbus import SMBus
 import time
 
 class RTD266x():
@@ -47,7 +47,7 @@ class RTD266x():
 				return True
 				
 			if (time.time() - start > self.TIMEOUT):
-				print "Timeout when waiting for register " + hex(reg) + "!"
+				print("Timeout when waiting for register " + hex(reg) + "!")
 				return False
 		
 	def _wait_write_done(self):
@@ -216,7 +216,7 @@ class RTD266x():
 	def read_flash(self, start, len):
 		crc = CRC()
 		
-		print "Reading " + str(len) + " bytes from address " + hex(start)
+		print("Reading " + str(len) + " bytes from address " + hex(start))
 		
 		data = self.spi_read(start, len)
 		
@@ -226,15 +226,15 @@ class RTD266x():
 		dev_crc = self.spi_compute_crc(start, start + len - 1)
 		
 		if (local_crc != dev_crc):
-			print "CRC validation failed! Expected " + hex(local_crc) + ", received " + hex(dev_crc)
+			print("CRC validation failed! Expected " + hex(local_crc) + ", received " + hex(dev_crc))
 			return None
 			
 		return data
 	
 	def program_flash(self, address, data):
 		length = len(data)
-		start_address = (address / self.SECTOR_SIZE) * self.SECTOR_SIZE
-	
+		start_address = int((address / self.SECTOR_SIZE) * self.SECTOR_SIZE)
+
 		if (address % self.SECTOR_SIZE != 0):
 			# start at a sector address
 			sector = self.read_flash(start_address, address - start_address)
@@ -257,15 +257,15 @@ class RTD266x():
 			address = start_address + i
 			
 			if (address % self.SECTOR_SIZE == 0):
-				print "Erasing sector at address " + hex(address)
+				print("Erasing sector at address " + hex(address))
 				
 				if (not self.erase_sector(address)):
-					print "Error erasing sector at address " + hex(address)
+					print("Error erasing sector at address " + hex(address))
 					return False
 		
 			segment_data = data[i:i + 256]
 		
-			print "Writing " + str(len(segment_data)) + " bytes to address " + hex(address)
+			print("Writing " + str(len(segment_data)) + " bytes to address " + hex(address))
 			
 			if (not self.write_segment(address, segment_data)):
 				return False
@@ -311,7 +311,7 @@ class RTD266x():
 		dev_crc = self.spi_compute_crc(address, address + length - 1)
 		
 		if (local_crc != dev_crc):
-			print "CRC validation failed! Expected " + hex(local_crc) + ", received " + hex(dev_crc)
+			print("CRC validation failed! Expected " + hex(local_crc) + ", received " + hex(dev_crc))
 			return False
 		
 		return True
