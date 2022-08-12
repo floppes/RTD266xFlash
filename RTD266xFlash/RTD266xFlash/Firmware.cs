@@ -309,6 +309,17 @@
                     new HashSkip(0x150F2, 1),
                     new HashSkip(0x261A2, 2271)
                 })
+            ),
+            new Firmware("Elecrow RC050, FW variant 1", 0x261A2, 2271, 0x1235A, 0xD09F, 0x14073, 0x13A59, 0x14D4E,
+                new HashInfo(0, 0x80000, "22FAE2A9E7376EE4F5CD8C8352282B5377E6DEC2FCA83BAFA9A5A1C474A2D9EB", new []
+                {
+                    new HashSkip(0xD09F + 0x1D, 48),
+                    new HashSkip(0x1235A, 16),
+                    new HashSkip(0x13A59, 48),
+                    new HashSkip(0x14073, 1),
+                    new HashSkip(0x14D4E, 1),
+                    new HashSkip(0x261A2, 2271)
+                })
             )
         };
 
