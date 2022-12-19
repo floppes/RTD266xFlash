@@ -108,7 +108,7 @@ To download the Python scripts, run the following commands:
 
 You are now ready to read the display's firmware with this command:
 
-`python rtd266x_flash.py -i I2CBUS -r 524288 out.bin`
+`python rtd266x_flash.py -i I2CBUS -r 524288 -f out.bin`
 
 Replace `I2CBUS` with your bus number. The number after parameter `-r` is the firmware's size in bytes (512 x 1024 = 512 KB). This will take about 2 minutes. Transfer the file `out.bin` to your PC/laptop where you have the GUI tool RTD266xFlash.exe. Start it and select **Firmware images**. Select `out.bin` as the input file and configure the modifications you want to perform. Click **Modify firmware** and save the modified firmware file.
 
@@ -118,7 +118,7 @@ Replace `I2CBUS` with your bus number. The number after parameter `-r` is the fi
 
 Transfer the modified firmware file to the Raspberry Pi and run
 
-`python rtd266x_flash.py -i I2CBUS -d out.bin out_modified.bin`
+`python rtd266x_flash.py -i I2CBUS -d out.bin -f out_modified.bin`
 
 where `I2CBUS` is the bus number and `out_modified.bin` is the modified firmware file. This will write all modified sectors of file `out_modified.bin` to the display, skipping the unmodified sectors to speed things up. Enjoy your modified firmware!
 
