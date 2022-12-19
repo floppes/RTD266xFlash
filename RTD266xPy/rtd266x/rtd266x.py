@@ -1,5 +1,5 @@
 from rtd266x.crc import CRC
-from rtd266x.smbus import SMBus
+from smbus import SMBus
 import time
 
 class RTD266x():
