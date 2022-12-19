@@ -43,7 +43,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pic.Location = new System.Drawing.Point(12, 25);
             this.pic.Name = "pic";
-            this.pic.Size = new System.Drawing.Size(407, 221);
+            this.pic.Size = new System.Drawing.Size(408, 221);
             this.pic.TabIndex = 0;
             this.pic.TabStop = false;
             // 
