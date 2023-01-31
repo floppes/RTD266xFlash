@@ -122,7 +122,7 @@ namespace RTD266xFlash.BackgroundWorkers
 
                 detectedFirmware = FirmwareAnalyzer.AnalyzeFirmware(firmware);
 
-                if (firmware == null)
+                if (detectedFirmware == null)
                 {
                     ReportStatus("Error! The firmware could not be analyzed automatically.");
                     e.Result = result;
