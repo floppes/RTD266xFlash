@@ -320,6 +320,17 @@
                     new HashSkip(0x14D4E, 1),
                     new HashSkip(0x261A2, 2271)
                 })
+            ),
+            new Firmware("P08-RT2660TP-MAIN-V1.0, FW variant 1", 0x26280, 56, 0x125D6, 0xE1F7, 0x14F45, 0x13D20, 0x15CC8,
+                new HashInfo(0, 0x80000, "A6BD01F16EE30D21FDEF844217337063AE5BD42ED563FC8327889F8E28CC2A7B", new []
+                {
+                    new HashSkip(0xE1F7 + 0x1D, 48),
+                    new HashSkip(0x125D6, 16),
+                    new HashSkip(0x13D20, 48),
+                    new HashSkip(0x14F45, 1),
+                    new HashSkip(0x15CC8, 1),
+                    new HashSkip(0x26280, 56)
+                })
             )
         };
 
