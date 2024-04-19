@@ -197,7 +197,7 @@ namespace RTD266xFlash
 
             offsets = FindPattern(firmware, _patternPalette);
 
-            if (offsets.Length == 1)
+            if (offsets.Length == 1 || offsets.Length == 2)
             {
                 paletteOffset = offsets[0];
             }
