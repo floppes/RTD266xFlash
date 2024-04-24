@@ -124,6 +124,24 @@ namespace RTD266xFlash
                 output.AppendLine();
             }
 
+            if (analyzedFirmware != null)
+            {
+                output.AppendLine("Code for new firmware:");
+                output.AppendLine();
+                output.AppendLine($"new Firmware(\"name\", 0x{analyzedFirmware.LogoOffset:X}, {analyzedFirmware.MaxLogoLength}, 0x{analyzedFirmware.HdmiStringOffset:X}, 0x{analyzedFirmware.AdjustBackgroundColorOffset:X}, 0x{analyzedFirmware.ShowNoteOffset:X}, 0x{analyzedFirmware.PaletteOffset:X}, 0x{analyzedFirmware.NoSignalOffset:X},");
+                output.AppendLine($"    new HashInfo(0, 0x80000, \"{analyzedFirmware.HashInfo.Hash}\", new []");
+                output.AppendLine("    {");
+                output.AppendLine($"        new HashSkip(0x{analyzedFirmware.AdjustBackgroundColorOffset:X} + 0x1D, 48),");
+                output.AppendLine($"        new HashSkip(0x{analyzedFirmware.HdmiStringOffset:X}, 16),");
+                output.AppendLine($"        new HashSkip(0x{analyzedFirmware.PaletteOffset:X}, 48),");
+                output.AppendLine($"        new HashSkip(0x{analyzedFirmware.ShowNoteOffset:X}, 1),");
+                output.AppendLine($"        new HashSkip(0x{analyzedFirmware.NoSignalOffset:X}, 1),");
+                output.AppendLine($"        new HashSkip(0x{analyzedFirmware.LogoOffset:X}, {analyzedFirmware.MaxLogoLength})");
+                output.AppendLine("    })");
+                output.AppendLine(")");
+                output.AppendLine();
+            }
+
             return output.ToString();
         }
 
