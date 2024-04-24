@@ -331,6 +331,17 @@
                     new HashSkip(0x15CC8, 1),
                     new HashSkip(0x26280, 56)
                 })
+            ),
+            new Firmware("PCB80052 AT065TN14, FW variant 1", 0x2623B, 56, 0x125A4, 0xD5AE, 0x14E23, 0x13C92, 0x15999,
+                new HashInfo(0, 0x80000, "FD02BAC181FDD7EACBD068E8FCC2968D1A403B3AC8A55E23F50D12176B79B7F3", new []
+                {
+                    new HashSkip(0xD5AE + 0x1D, 48),
+                    new HashSkip(0x125A4, 16),
+                    new HashSkip(0x13C92, 48),
+                    new HashSkip(0x14E23, 1),
+                    new HashSkip(0x15999, 1),
+                    new HashSkip(0x2623B, 56)
+                })
             )
         };
 
